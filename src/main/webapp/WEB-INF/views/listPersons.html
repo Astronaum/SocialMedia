@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Personnes</title>
+</head>
+<body>
+<h2>Liste des Personnes</h2>
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Date de Naissance</th>
+    </tr>
+    <tr th:each="person : ${persons}">
+        <td th:text="${person.nom}">Nom</td>
+        <td th:text="${person.prenom}">Prénom</td>
+        <td th:text="${person.dateNaissance}">Date de Naissance</td>
+    </tr>
+</table>
+<a href="/personnes/new">Ajouter une nouvelle personne</a>
+</body>
+</html>
