@@ -1,0 +1,37 @@
+package org.example.socialnetwork.controllers;
+
+import jakarta.transaction.Transactional;
+import org.example.socialnetwork.entities.Relationship;
+import org.example.socialnetwork.entities.RelationType;
+import org.example.socialnetwork.services.Facade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/relationship")
+public class RelationshipController {
+
+    @Autowired
+    private Facade facade;
+
+    public RelationshipController(Facade facade) {
+        this.facade = facade;
+    }
+
+    @GetMapping("/create")
+    public String showCreateRelationshipForm(Model model) {
+        model.addAttribute("relationship", new Relationship());
+        model.addAttribute("persons", facade.getAllPersons());
+        model.addAttribute("relationTypes", RelationType.values());
+        return "createRelationship";
+    }
+
+    @PostMapping("/save")
+    @Transactional
+    public String saveRelationship(@ModelAttribute Relationship relationship) {
+        facade.createRelationship(relationship);
+        return "redirect:/persons"; // Redirect to the list of persons after creating a relationship
+    }
+}

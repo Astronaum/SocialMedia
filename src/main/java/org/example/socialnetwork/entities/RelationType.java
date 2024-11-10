@@ -1,4 +1,4 @@
-package org.example.socialnetwork.model;
+package org.example.socialnetwork.entities;
 
 public enum RelationType {
     AMI,

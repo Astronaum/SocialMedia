@@ -2,21 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Liste des Personnes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* Align elements in a vertical direction */
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            display: inline-block;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-<h2>Liste des Personnes</h2>
-<table>
-    <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Date de Naissance</th>
-    </tr>
-    <tr th:each="person : ${persons}">
-        <td th:text="${person.nom}">Nom</td>
-        <td th:text="${person.prenom}">Prénom</td>
-        <td th:text="${person.dateNaissance}">Date de Naissance</td>
-    </tr>
-</table>
-<a href="/personnes/new">Ajouter une nouvelle personne</a>
+
+<div class="table-container">
+    <h2>Liste des Personnes</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de Naissance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${persons}">
+            <td th:text="${person.nom}">Nom</td>
+            <td th:text="${person.prenom}">Prénom</td>
+            <td th:text="${person.dateNaissance}">Date de Naissance</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/persons/new}">Ajouter une nouvelle personne</a>
+</div>
+
 </body>
 </html>

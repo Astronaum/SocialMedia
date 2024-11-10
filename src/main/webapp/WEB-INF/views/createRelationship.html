@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Créer une Relation</title>
+</head>
+<body>
+
+<h2>Créer une Relation</h2>
+
+<form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
+  <div>
+    <label for="personA">Personne A:</label>
+    <select th:field="*{personA}" id="personA">
+      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
+    </select>
+  </div>
+
+  <div>
+    <label for="personB">Personne B:</label>
+    <select th:field="*{personB}" id="personB">
+      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
+    </select>
+  </div>
+
+  <div>
+    <label for="relationType">Type de relation:</label>
+    <select th:field="*{typeRelation}" id="relationType">
+      <option th:each="type : ${relationTypes}" th:value="${type}" th:text="${type}"></option>
+    </select>
+  </div>
+
+  <button type="submit">Enregistrer</button>
+</form>
+
+</body>
+</html>

@@ -1,6 +1,5 @@
 package org.example.socialnetwork.config;
 
-import jakarta.servlet.annotation.WebServlet;
 import org.h2.server.web.JakartaWebServlet;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

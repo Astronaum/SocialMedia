@@ -2,20 +2,86 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Ajouter une Personne</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-container label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .form-container input:focus, .form-container button:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(72, 155, 245, 0.8);
+        }
+    </style>
 </head>
 <body>
-<h2>Ajouter une Personne</h2>
-<form th:action="@{/personnes/save}" th:object="${person}" method="post">
-    <label>Nom:</label>
-    <input type="text" th:field="*{nom}" required/>
-    <br>
-    <label>Prénom:</label>
-    <input type="text" th:field="*{prenom}" required/>
-    <br>
-    <label>Date de Naissance:</label>
-    <input type="date" th:field="*{dateNaissance}" required/>
-    <br>
-    <button type="submit">Enregistrer</button>
-</form>
+<div class="form-container">
+    <h2>Ajouter une Personne</h2>
+    <form th:action="@{/persons/save}" th:object="${person}" method="post">
+        <label for="nom">Nom:</label>
+        <input type="text" th:field="*{nom}" required id="nom"/>
+
+        <label for="prenom">Prénom:</label>
+        <input type="text" th:field="*{prenom}" required id="prenom"/>
+
+        <label for="dateNaissance">Date de Naissance:</label>
+        <input type="date" th:field="*{dateNaissance}" required id="dateNaissance"/>
+
+        <button type="submit">Enregistrer</button>
+    </form>
+</div>
 </body>
 </html>
