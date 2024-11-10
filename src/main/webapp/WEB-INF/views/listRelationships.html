@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Relations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #3a506b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        h2 {
+            color: #5fa1d7;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .table-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #5fa1d7;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fbfc;
+        }
+
+        tr:hover {
+            background-color: #eef5fb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="table-container">
+    <h2>Liste des Relations</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Personne A</th>
+            <th>Type de Relation</th>
+            <th>Personne B</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="relationship : ${relationships}">
+            <td th:text="${relationship.personA.nom + ' ' + relationship.personA.prenom}">Nom Personne A</td>
+            <td th:text="${relationship.typeRelation}">Type de Relation</td>
+            <td th:text="${relationship.personB.nom + ' ' + relationship.personB.prenom}">Nom Personne B</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

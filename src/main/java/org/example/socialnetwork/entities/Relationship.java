@@ -9,64 +9,35 @@ public class Relationship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "personA_id")
-    private Long personAId;
+    @ManyToOne
+    @JoinColumn(name = "personA_id", referencedColumnName = "id")
+    private Person personA;
 
-    @Column(name = "personB_id")
-    private Long personBId;
+    @ManyToOne
+    @JoinColumn(name = "personB_id", referencedColumnName = "id")
+    private Person personB;
 
     @Enumerated(EnumType.STRING)
     private RelationType typeRelation;
 
-    public Relationship(){}
+    public Relationship() {}
 
-    public Relationship(Long id, Long personAId, Long personBId, RelationType typeRelation) {
-        this.id = id;
-        this.personAId = personAId;
-        this.personBId = personBId;
+    public Relationship(Person personA, Person personB, RelationType typeRelation) {
+        this.personA = personA;
+        this.personB = personB;
         this.typeRelation = typeRelation;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Person getPersonA() { return personA; }
+    public void setPersonA(Person personA) { this.personA = personA; }
 
-    public Long getPersonAId() {
-        return personAId;
-    }
+    public Person getPersonB() { return personB; }
+    public void setPersonB(Person personB) { this.personB = personB; }
 
-    public void setPersonAId(Long personAId) {
-        this.personAId = personAId;
-    }
-
-    public Long getPersonBId() {
-        return personBId;
-    }
-
-    public void setPersonBId(Long personBId) {
-        this.personBId = personBId;
-    }
-
-    public RelationType getTypeRelation() {
-        return typeRelation;
-    }
-
-    public void setTypeRelation(RelationType typeRelation) {
-        this.typeRelation = typeRelation;
-    }
-
-    @Override
-    public String toString() {
-        return "Relationship{" +
-                "id=" + id +
-                ", personAId=" + personAId +
-                ", personBId=" + personBId +
-                ", typeRelation=" + typeRelation +
-                '}';
-    }
+    public RelationType getTypeRelation() { return typeRelation; }
+    public void setTypeRelation(RelationType typeRelation) { this.typeRelation = typeRelation; }
 }

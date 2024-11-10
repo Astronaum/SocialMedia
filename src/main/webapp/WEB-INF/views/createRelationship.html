@@ -71,15 +71,15 @@
   <h2>Créer une Relation</h2>
   <form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
     <div class="form-group">
-      <label for="personAId">Personne A:</label>
-      <select th:field="*{personAId}" id="personAId">
+      <label for="personA">Personne A:</label>
+      <select th:field="*{personA.id}" id="personA">
         <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="personBId">Personne B:</label>
-      <select th:field="*{personBId}" id="personBId">
+      <label for="personB">Personne B:</label>
+      <select th:field="*{personB.id}" id="personB">
         <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
       </select>
     </div>
