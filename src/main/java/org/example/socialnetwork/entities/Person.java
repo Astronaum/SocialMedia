@@ -15,7 +15,7 @@ public class Person {
     private String prenom;
     private LocalDate dateNaissance;
 
-    @OneToMany(mappedBy = "personA", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "personAId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Relationship> relations = new HashSet<>();
 
     // Default constructor

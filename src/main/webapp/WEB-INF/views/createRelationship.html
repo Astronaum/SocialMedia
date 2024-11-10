@@ -2,35 +2,98 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Créer une Relation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h2 {
+      color: #3a506b;
+      text-align: center;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #3a506b;
+      font-weight: bold;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 4px;
+      border: 1px solid #d1d9e6;
+      font-size: 1rem;
+      color: #3a506b;
+    }
+
+    select:focus, button:focus {
+      outline: none;
+      border-color: #5fa1d7;
+      box-shadow: 0 0 5px rgba(95, 161, 215, 0.5);
+    }
+
+    button {
+      background-color: #5fa1d7;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4a8ab4;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Créer une Relation</h2>
+<div class="form-container">
+  <h2>Créer une Relation</h2>
+  <form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
+    <div class="form-group">
+      <label for="personAId">Personne A:</label>
+      <select th:field="*{personAId}" id="personAId">
+        <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
+      </select>
+    </div>
 
-<form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
-  <div>
-    <label for="personA">Personne A:</label>
-    <select th:field="*{personA}" id="personA">
-      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
-    </select>
-  </div>
+    <div class="form-group">
+      <label for="personBId">Personne B:</label>
+      <select th:field="*{personBId}" id="personBId">
+        <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
+      </select>
+    </div>
 
-  <div>
-    <label for="personB">Personne B:</label>
-    <select th:field="*{personB}" id="personB">
-      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
-    </select>
-  </div>
+    <div class="form-group">
+      <label for="relationType">Type de relation:</label>
+      <select th:field="*{typeRelation}" id="relationType">
+        <option th:each="type : ${relationTypes}" th:value="${type}" th:text="${type}"></option>
+      </select>
+    </div>
 
-  <div>
-    <label for="relationType">Type de relation:</label>
-    <select th:field="*{typeRelation}" id="relationType">
-      <option th:each="type : ${relationTypes}" th:value="${type}" th:text="${type}"></option>
-    </select>
-  </div>
-
-  <button type="submit">Enregistrer</button>
-</form>
+    <button type="submit">Enregistrer</button>
+  </form>
+</div>
 
 </body>
 </html>

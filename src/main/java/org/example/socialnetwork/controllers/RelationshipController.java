@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/relationship")
@@ -16,22 +18,18 @@ public class RelationshipController {
     @Autowired
     private Facade facade;
 
-    public RelationshipController(Facade facade) {
-        this.facade = facade;
-    }
-
     @GetMapping("/create")
     public String showCreateRelationshipForm(Model model) {
-        model.addAttribute("relationship", new Relationship());
+        model.addAttribute("relationship", new Relationship()); // Ensure this is correct
         model.addAttribute("persons", facade.getAllPersons());
         model.addAttribute("relationTypes", RelationType.values());
         return "createRelationship";
     }
 
     @PostMapping("/save")
-    @Transactional
-    public String saveRelationship(@ModelAttribute Relationship relationship) {
+    public String saveRelationship(@ModelAttribute("relationship") Relationship relationship) {
         facade.createRelationship(relationship);
-        return "redirect:/persons"; // Redirect to the list of persons after creating a relationship
+        return "redirect:/persons";
     }
 }
+

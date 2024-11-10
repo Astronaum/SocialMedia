@@ -9,14 +9,23 @@ public class Relationship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Person personA;
+    @Column(name = "personA_id")
+    private Long personAId;
 
-    @ManyToOne
-    private Person personB;
+    @Column(name = "personB_id")
+    private Long personBId;
 
     @Enumerated(EnumType.STRING)
     private RelationType typeRelation;
+
+    public Relationship(){}
+
+    public Relationship(Long id, Long personAId, Long personBId, RelationType typeRelation) {
+        this.id = id;
+        this.personAId = personAId;
+        this.personBId = personBId;
+        this.typeRelation = typeRelation;
+    }
 
     // Getters and Setters
     public Long getId() {
@@ -27,20 +36,20 @@ public class Relationship {
         this.id = id;
     }
 
-    public Person getPersonA() {
-        return personA;
+    public Long getPersonAId() {
+        return personAId;
     }
 
-    public void setPersonA(Person personA) {
-        this.personA = personA;
+    public void setPersonAId(Long personAId) {
+        this.personAId = personAId;
     }
 
-    public Person getPersonB() {
-        return personB;
+    public Long getPersonBId() {
+        return personBId;
     }
 
-    public void setPersonB(Person personB) {
-        this.personB = personB;
+    public void setPersonBId(Long personBId) {
+        this.personBId = personBId;
     }
 
     public RelationType getTypeRelation() {
@@ -49,5 +58,15 @@ public class Relationship {
 
     public void setTypeRelation(RelationType typeRelation) {
         this.typeRelation = typeRelation;
+    }
+
+    @Override
+    public String toString() {
+        return "Relationship{" +
+                "id=" + id +
+                ", personAId=" + personAId +
+                ", personBId=" + personBId +
+                ", typeRelation=" + typeRelation +
+                '}';
     }
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.example.socialnetwork.entities.Person;
 import org.example.socialnetwork.entities.Relationship;
-import org.springframework.stereotype.Component;
+import org.example.socialnetwork.entities.RelationType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class Facade {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Transactional
     public Person createPerson(Person person) {
@@ -57,6 +57,7 @@ public class Facade {
     }
 
     public Relationship updateRelationship(Relationship relationship) {
+        // Retrieve and update the Relationship object
         return entityManager.merge(relationship);
     }
 

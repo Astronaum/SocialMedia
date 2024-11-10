@@ -5,43 +5,54 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            background-color: #f0f4f8;
+            color: #3a506b;
             margin: 0;
-            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             text-align: center;
-            padding-top: 100px;
         }
 
         h1 {
-            color: #4CAF50;
-            font-size: 36px;
-            margin-bottom: 20px;
+            color: #5fa1d7;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        p {
+            color: #627d98;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
         .button-container {
-            margin-top: 30px;
+            margin-top: 1.5rem;
         }
 
         .button-container a {
             text-decoration: none;
             color: white;
-            background-color: #4CAF50;
-            padding: 10px 20px;
+            background-color: #5fa1d7;
+            padding: 0.8rem 1.5rem;
             border-radius: 5px;
-            font-size: 18px;
+            font-size: 1rem;
+            font-weight: bold;
             transition: background-color 0.3s ease;
         }
 
         .button-container a:hover {
-            background-color: #45a049;
+            background-color: #4a8ab4;
         }
     </style>
 </head>
 <body>
 
 <h1>Welcome to the Social Network</h1>
-<p>Connect, share, and collaborate with others.</p>
+<p>Connect, share, and collaborate with others in a vibrant social space.</p>
 
 <div class="button-container">
     <a th:href="@{/persons}">View All Persons</a>
