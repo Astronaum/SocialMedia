@@ -3,6 +3,7 @@
 <head>
     <title>Liste des Personnes</title>
     <style>
+        /* General Styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f4f8;
@@ -10,11 +11,58 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
             text-align: center;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #5fa1d7;
+            padding: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 1rem;
+        }
+
+        .navbar a:hover {
+            color: #d1e9ff;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        /* Content Container Styling */
+        .table-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 800px;
+            margin-top: 5rem; /* Offset for fixed navbar */
+            margin-bottom: 30px;
         }
 
         h2 {
@@ -23,16 +71,7 @@
             font-size: 1.8rem;
         }
 
-        .table-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 30px;
-        }
-
+        /* Table Styling */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -60,7 +99,8 @@
             background-color: #eef5fb;
         }
 
-        a {
+        /* Button Styling */
+        .button {
             display: inline-block;
             text-align: center;
             padding: 10px 20px;
@@ -70,15 +110,30 @@
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            font-weight: bold;
         }
 
-        a:hover {
+        .button:hover {
             background-color: #4a8ab4;
         }
     </style>
 </head>
+
 <body>
 
+<!-- Navbar Section -->
+<header>
+    <nav class="navbar">
+        <div class="navbar-brand">Social Network</div>
+        <div class="nav-links">
+            <a th:href="@{/persons}">Liste des Personnes</a>
+            <a th:href="@{/relationship/create}">Créer une Relation</a>
+            <a th:href="@{/relationship/list}">Liste des Relations</a>
+        </div>
+    </nav>
+</header>
+
+<!-- Table Container Section -->
 <div class="table-container">
     <h2>Liste des Personnes</h2>
     <table>
@@ -98,7 +153,7 @@
         </tbody>
     </table>
 
-    <a th:href="@{/persons/new}">Ajouter une nouvelle personne</a>
+    <a th:href="@{/persons/new}" class="button">Ajouter une nouvelle personne</a>
 </div>
 
 </body>

@@ -3,27 +3,70 @@
 <head>
   <title>Créer une Relation</title>
   <style>
+    /* General Page Styling */
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f4f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    h2 {
       color: #3a506b;
-      text-align: center;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
+    /* Navbar Styling */
+    .navbar {
+      background-color: #5fa1d7;
+      padding: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 1rem;
+    }
+
+    .navbar a:hover {
+      color: #d1e9ff;
+    }
+
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+    }
+
+    /* Form Container Styling */
     .form-container {
       background-color: #fff;
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 400px;
+      width: 100%;
+      max-width: 400px;
+      margin-top: 5rem; /* Offset for fixed navbar */
+    }
+
+    h2 {
+      color: #3a506b;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     .form-group {
@@ -65,8 +108,22 @@
     }
   </style>
 </head>
+
 <body>
 
+<!-- Navbar Section -->
+<header>
+  <nav class="navbar">
+    <div class="navbar-brand">Social Network</div>
+    <div class="nav-links">
+      <a th:href="@{/persons}">Liste des Personnes</a>
+      <a th:href="@{/relationship/create}">Créer une Relation</a>
+      <a th:href="@{/relationship/list}">Liste des Relations</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Form Container Section -->
 <div class="form-container">
   <h2>Créer une Relation</h2>
   <form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
