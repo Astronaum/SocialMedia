@@ -16,6 +16,17 @@
       min-height: 100vh;
     }
 
+    .error-message {
+      background-color: #ffdddd;
+      color: #d8000c;
+      border: 1px solid #d8000c;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
     /* Navbar Styling */
     .navbar {
       background-color: #5fa1d7;
@@ -126,6 +137,9 @@
 <!-- Form Container Section -->
 <div class="form-container">
   <h2>Créer une Relation</h2>
+  <div th:if="${errorMessage}" class="error-message">
+    <p th:text="${errorMessage}"></p>
+  </div>
   <form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
     <div class="form-group">
       <label for="personA">Personne A:</label>

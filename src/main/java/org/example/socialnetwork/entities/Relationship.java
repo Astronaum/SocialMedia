@@ -2,6 +2,7 @@ package org.example.socialnetwork.entities;
 
 import jakarta.persistence.*;
 
+@Table(name = "relationship")
 @Entity
 public class Relationship {
 
@@ -40,4 +41,9 @@ public class Relationship {
 
     public RelationType getTypeRelation() { return typeRelation; }
     public void setTypeRelation(RelationType typeRelation) { this.typeRelation = typeRelation; }
+
+    public Relationship createReverse() {
+        return new Relationship(this.personB, this.personA, this.typeRelation);
+    }
+
 }

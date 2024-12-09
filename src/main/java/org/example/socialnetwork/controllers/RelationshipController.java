@@ -27,19 +27,29 @@ public class RelationshipController {
 
     @PostMapping("/save")
     @Transactional
-    public String saveRelationship(@ModelAttribute("relationship") Relationship relationship) {
+    public String saveRelationship(@ModelAttribute("relationship") Relationship relationship, Model model) {
         // Retrieve and set the actual Person entities based on their IDs
-        relationship.setPersonA(facade.getPerson(relationship.getPersonA().getId()));
-        relationship.setPersonB(facade.getPerson(relationship.getPersonB().getId()));
+        Person personA = facade.getPerson(relationship.getPersonA().getId());
+        Person personB = facade.getPerson(relationship.getPersonB().getId());
+        relationship.setPersonA(personA);
+        relationship.setPersonB(personB);
+
+        // Validation: Check if PersonA and PersonB are the same
+        if (personA.getId().equals(personB.getId())) {
+            model.addAttribute("errorMessage", "Une personne ne peut pas avoir une relation avec elle-même.");
+            model.addAttribute("persons", facade.getAllPersons());
+            model.addAttribute("relationTypes", RelationType.values());
+            return "createRelationship"; // Return the form view with the error message
+        }
 
         // Save the relationship
-        facade.createRelationship(relationship);
+        facade.createBidirectionalRelationship(relationship);
         return "redirect:/relationship/list";
     }
 
     @GetMapping("/list")
     public String listRelationships(Model model) {
-        model.addAttribute("relationships", facade.getAllRelationships());
+        model.addAttribute("relationships", facade.getUniqueRelationships());
         return "listRelationships";
     }
 }

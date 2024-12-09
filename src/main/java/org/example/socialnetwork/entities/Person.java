@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+@Table(name = "person")
 @Entity
 public class Person {
 
@@ -15,6 +16,8 @@ public class Person {
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
+    @Column(length = 500) // Limite la taille du texte si nécessaire
+    private String description;
 
     @OneToMany(mappedBy = "personA", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Relationship> relationsAsPersonA = new HashSet<>();
@@ -24,10 +27,11 @@ public class Person {
 
     public Person() {}
 
-    public Person(String nom, String prenom, LocalDate dateNaissance) {
+    public Person(String nom, String prenom, LocalDate dateNaissance, String description) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
+        this.description = description;
     }
 
     // Getters and setters
@@ -42,6 +46,9 @@ public class Person {
 
     public LocalDate getDateNaissance() { return dateNaissance; }
     public void setDateNaissance(LocalDate dateNaissance) { this.dateNaissance = dateNaissance; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
     public Set<Relationship> getRelationsAsPersonA() { return relationsAsPersonA; }
     public void setRelationsAsPersonA(Set<Relationship> relationsAsPersonA) { this.relationsAsPersonA = relationsAsPersonA; }
