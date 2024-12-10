@@ -28,24 +28,49 @@ public class RelationshipController {
     @PostMapping("/save")
     @Transactional
     public String saveRelationship(@ModelAttribute("relationship") Relationship relationship, Model model) {
-        // Retrieve and set the actual Person entities based on their IDs
-        Person personA = facade.getPerson(relationship.getPersonA().getId());
-        Person personB = facade.getPerson(relationship.getPersonB().getId());
-        relationship.setPersonA(personA);
-        relationship.setPersonB(personB);
+        try {
+            // Retrieve and set the actual Person entities based on their IDs
+            Person personA = facade.getPerson(relationship.getPersonA().getId());
+            Person personB = facade.getPerson(relationship.getPersonB().getId());
 
-        // Validation: Check if PersonA and PersonB are the same
-        if (personA.getId().equals(personB.getId())) {
-            model.addAttribute("errorMessage", "Une personne ne peut pas avoir une relation avec elle-même.");
-            model.addAttribute("persons", facade.getAllPersons());
-            model.addAttribute("relationTypes", RelationType.values());
-            return "createRelationship"; // Return the form view with the error message
+            if (personA == null || personB == null) {
+                throw new IllegalArgumentException("Les personnes sélectionnées n'existent pas.");
+            }
+
+            relationship.setPersonA(personA);
+            relationship.setPersonB(personB);
+
+            // Validation: Check if PersonA and PersonB are the same
+            if (personA.getId().equals(personB.getId())) {
+                model.addAttribute("errorMessage", "Une personne ne peut pas avoir une relation avec elle-même.");
+                throw new IllegalArgumentException("Une personne ne peut pas avoir une relation avec elle-même.");
+            }
+
+            // Check if the relationship already exists
+            if (facade.relationshipExists(personA, personB)) {
+                model.addAttribute("errorMessage", "La relation existe déjà entre " + personA.getNom() + " et " + personB.getNom() + ".");
+                throw new IllegalArgumentException("La relation existe déjà.");
+            }
+
+            // Save the relationship
+            facade.createBidirectionalRelationship(relationship);
+
+            return "redirect:/relationship/list"; // Redirect to the relationship list on success
+
+        } catch (IllegalArgumentException e) {
+            // Handle validation errors by returning to the form with the error message
+            model.addAttribute("errorMessage", e.getMessage());
+        } catch (Exception e) {
+            // Handle unexpected errors
+            model.addAttribute("errorMessage", "Une erreur inattendue s'est produite: " + e.getMessage());
         }
 
-        // Save the relationship
-        facade.createBidirectionalRelationship(relationship);
-        return "redirect:/relationship/list";
+        // Repopulate form data and return to the form view
+        model.addAttribute("persons", facade.getAllPersons());
+        model.addAttribute("relationTypes", RelationType.values());
+        return "createRelationship";
     }
+
 
     @GetMapping("/list")
     public String listRelationships(Model model) {

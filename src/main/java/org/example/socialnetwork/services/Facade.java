@@ -35,20 +35,29 @@ public class Facade {
             throw new IllegalArgumentException("Une personne ne peut pas avoir une relation avec elle-même.");
         }
 
-        // Ensure personA and personB are managed entities by merging them if necessary
         Person personA = entityManager.find(Person.class, relationship.getPersonA().getId());
         Person personB = entityManager.find(Person.class, relationship.getPersonB().getId());
 
-        if (personA == null || personB == null) {
-            throw new IllegalStateException("Person(s) involved in the relationship do not exist in the database.");
+        if (personA == null) {
+            throw new IllegalStateException("Personne A inexistante dans la base de données.");
+        }
+        if (personB == null) {
+            throw new IllegalStateException("Personne B inexistante dans la base de données.");
         }
 
-        // Set the managed entities into the relationship
-        relationship.setPersonA(personA);
-        relationship.setPersonB(personB);
+        // Check if the relationship already exists
+        if (relationshipExists(personA, personB)) {
+            throw new IllegalArgumentException("La relation existe déjà entre "
+                    + personA.getNom() + " et " + personB.getNom());
+        }
 
-        // Persist the initial relationship
-        entityManager.persist(relationship);
+        // Create and persist the main relationship
+        Relationship managedRelationship = new Relationship(
+                personA,
+                personB,
+                relationship.getTypeRelation()
+        );
+        entityManager.persist(managedRelationship);
 
         // Create and persist the reverse relationship
         Relationship reverseRelationship = new Relationship(
@@ -56,9 +65,11 @@ public class Facade {
                 personA,
                 relationship.getTypeRelation()
         );
-
         entityManager.persist(reverseRelationship);
+
+        System.out.println("Relation créée avec succès entre " + personA.getNom() + " et " + personB.getNom());
     }
+
 
     public boolean relationshipExists(Person personA, Person personB) {
         Long count = entityManager.createQuery(
