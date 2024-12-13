@@ -119,39 +119,34 @@
 <div class="table-container">
     <h2>Liste des Relations</h2>
 
-    <!-- Search Form -->
     <form th:action="@{/relationship/search}" method="get" style="margin-bottom: 20px;">
-        <!-- Dropdown de sélection des personnes -->
-        <select id="personDropdown" name="personId" style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
-            <option value="">-- Sélectionnez une personne --</option>
-            <!-- Les options seront injectées ici via JavaScript -->
-        </select>
-
-        <button type="submit" class="button">Rechercher</button>
+        <input type="text" id="personSearch" name="personQuery" placeholder="Search for a person..."
+               style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+        <button type="submit" style="padding: 10px 15px; border: none; border-radius: 5px; background-color: #007BFF; color: white; cursor: pointer;">
+            Search
+        </button>
     </form>
 
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+    <p th:if="${personSearched}" th:text="'Results for: ' + ${personSearched}"></p>
 
-    <!-- Searched Person -->
-    <h3 th:if="${personSearched != null}" th:text="'Résultats pour : ' + ${personSearched.nom} + ' ' + ${personSearched.prenom}"></h3>
-    <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
-
-    <!-- Relationships Table -->
     <table>
         <thead>
         <tr>
-            <th>Personne A</th>
-            <th>Type de Relation</th>
-            <th>Personne B</th>
+            <th>Person A</th>
+            <th>Relation Type</th>
+            <th>Person B</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="relationship : ${relationships}">
-            <td th:text="${relationship.personA.nom + ' ' + relationship.personA.prenom}">Nom Personne A</td>
-            <td th:text="${relationship.typeRelation}">Type de Relation</td>
-            <td th:text="${relationship.personB.nom + ' ' + relationship.personB.prenom}">Nom Personne B</td>
+            <td th:text="${relationship.personA.nom + ' ' + relationship.personA.prenom}">Person A</td>
+            <td th:text="${relationship.typeRelation}">Relation Type</td>
+            <td th:text="${relationship.personB.nom + ' ' + relationship.personB.prenom}">Person B</td>
         </tr>
         </tbody>
     </table>
+
 </div>
 
 </body>

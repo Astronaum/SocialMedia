@@ -84,6 +84,7 @@ public class Facade {
                 .getResultList();
     }
 
+
     public List<Person> getPersonsRelatedTo(Long personId) {
         return entityManager.createQuery(
                         "SELECT DISTINCT p FROM Relationship r JOIN r.personB p WHERE r.personA.id = :personId", Person.class)
@@ -100,12 +101,19 @@ public class Facade {
             }
         }
 
+
         Query query = entityManager.createQuery(queryBuilder.toString(), Person.class);
         for (int i = 0; i < keywords.length; i++) {
             query.setParameter("keyword" + i, "%" + keywords[i] + "%");
         }
 
         return query.getResultList();
+    }
+    public List<Person> searchPersonsByFullName(String fullName) {
+        return entityManager.createQuery(
+                        "SELECT p FROM Person p WHERE LOWER(CONCAT(p.nom, ' ', p.prenom)) = LOWER(:fullName)", Person.class)
+                .setParameter("fullName", fullName)
+                .getResultList();
     }
 
     public List<Person> searchPersonsByDescriptionKeywords(String[] keywords) {
@@ -131,14 +139,23 @@ public class Facade {
             return new ArrayList<>();
         }
 
-        List<Person> personsByName = searchPersonsByNameKeywords(keywords);
-        List<Person> personsByDescription = searchPersonsByDescriptionKeywords(keywords);
+        StringBuilder queryBuilder = new StringBuilder("SELECT DISTINCT p FROM Person p WHERE ");
+        for (int i = 0; i < keywords.length; i++) {
+            queryBuilder.append("LOWER(p.nom) LIKE LOWER(:keyword").append(i)
+                    .append(") OR LOWER(p.prenom) LIKE LOWER(:keyword").append(i).append(")");
+            if (i < keywords.length - 1) {
+                queryBuilder.append(" OR ");
+            }
+        }
 
-        Set<Person> combinedResults = new HashSet<>(personsByName);
-        combinedResults.addAll(personsByDescription);
+        Query query = entityManager.createQuery(queryBuilder.toString(), Person.class);
+        for (int i = 0; i < keywords.length; i++) {
+            query.setParameter("keyword" + i, "%" + keywords[i] + "%");
+        }
 
-        return new ArrayList<>(combinedResults);
+        return query.getResultList();
     }
+
 
     public boolean relationshipWithTypeExists(Person personA, Person personB, RelationType typeRelation) {
         Long count = entityManager.createQuery(

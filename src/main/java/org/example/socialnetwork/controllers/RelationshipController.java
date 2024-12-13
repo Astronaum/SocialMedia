@@ -79,25 +79,33 @@ public class RelationshipController {
     }
 
     @GetMapping("/search")
-    public String searchRelationshipsByPerson(@RequestParam("personId") Long personId, Model model) {
-        if (personId == null) {
-            model.addAttribute("errorMessage", "Veuillez sélectionner une personne.");
+    public String searchRelationshipsByFullName(@RequestParam("personQuery") String personQuery, Model model) {
+        if (personQuery == null || personQuery.trim().isEmpty()) {
+            model.addAttribute("errorMessage", "Veuillez entrer le nom complet pour effectuer une recherche.");
             model.addAttribute("relationships", new ArrayList<>());
             return "listRelationships";
         }
 
-        Person person = facade.getPerson(personId);
-        if (person == null) {
-            model.addAttribute("errorMessage", "Personne introuvable.");
+        // Search for persons matching the full name
+        List<Person> matchingPersons = facade.searchPersonsByFullName(personQuery.trim());
+
+        if (matchingPersons.isEmpty()) {
+            model.addAttribute("errorMessage", "Aucune personne trouvée correspondant à votre recherche.");
             model.addAttribute("relationships", new ArrayList<>());
-            return "listRelationships";
+        } else {
+            // Get relationships for the matching persons
+            List<Relationship> relationships = new ArrayList<>();
+            for (Person person : matchingPersons) {
+                relationships.addAll(facade.getRelationshipsForPerson(person.getId()));
+            }
+
+            model.addAttribute("relationships", relationships);
         }
 
-        List<Relationship> relationships = facade.getRelationshipsForPerson(personId);
-        model.addAttribute("personSearched", person);
-        model.addAttribute("relationships", relationships);
+        model.addAttribute("personSearched", personQuery);
         return "listRelationships";
     }
+
 
     @GetMapping("/persons")
     @ResponseBody
