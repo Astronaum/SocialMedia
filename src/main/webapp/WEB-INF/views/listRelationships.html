@@ -110,7 +110,7 @@
         <div class="nav-links">
             <a th:href="@{/persons}">Liste des Personnes</a>
             <a th:href="@{/relationship/create}">Créer une Relation</a>
-            <a th:href="@{/relationship/list}">Liste des Relations</a>
+            <a th:href="@{/relationship/list}">Les relations</a>
         </div>
     </nav>
 </header>
@@ -119,13 +119,20 @@
 <div class="table-container">
     <h2>Liste des Relations</h2>
 
-    <form th:action="@{/relationship/search}" method="get" style="margin-bottom: 20px;">
+    <form th:action="@{/relationship/search}" method="get" style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
         <input type="text" id="personSearch" name="personQuery" placeholder="Search for a person..."
-               style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+               style="padding: 10px; flex-grow: 1; border: 1px solid #ccc; border-radius: 5px;">
         <button type="submit" style="padding: 10px 15px; border: none; border-radius: 5px; background-color: #007BFF; color: white; cursor: pointer;">
             Search
         </button>
+        <!-- Nouveau bouton "Voir Types de Relations" -->
+        <a th:href="@{/relationship/relation-types}"
+           style="padding: 10px 15px; border: none; border-radius: 5px; background-color: #007BFF; color: white; text-decoration: none; cursor: pointer;">
+            Types de Relations et Occurences
+        </a>
     </form>
+
+
 
     <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
     <p th:if="${personSearched}" th:text="'Results for: ' + ${personSearched}"></p>

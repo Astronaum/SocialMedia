@@ -72,7 +72,7 @@ public class RelationshipController {
     }
 
 
-@GetMapping("/list")
+    @GetMapping("/list")
     public String listRelationships(Model model) {
         model.addAttribute("relationships", facade.getUniqueRelationships());
         return "listRelationships";
