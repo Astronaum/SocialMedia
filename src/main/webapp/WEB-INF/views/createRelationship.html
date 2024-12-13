@@ -137,32 +137,32 @@
 <!-- Form Container Section -->
 <div class="form-container">
   <h2>Créer une Relation</h2>
-  <div th:if="${errorMessage}" class="error-message">
+  <div th:if="${errorMessage}" style="color: red;">
     <p th:text="${errorMessage}"></p>
   </div>
   <form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
-    <div class="form-group">
-      <label for="personA">Personne A:</label>
-      <select th:field="*{personA.id}" id="personA">
-        <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
-      </select>
-    </div>
+    <label for="personA">Personne A:</label>
+    <select id="personA" th:field="*{personA.id}" required>
+      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom + ' ' + person.prenom}">
+        Personne A
+      </option>
+    </select>
 
-    <div class="form-group">
-      <label for="personB">Personne B:</label>
-      <select th:field="*{personB.id}" id="personB">
-        <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom}"></option>
-      </select>
-    </div>
+    <label for="personB">Personne B:</label>
+    <select id="personB" th:field="*{personB.id}" required>
+      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom + ' ' + person.prenom}">
+        Personne B
+      </option>
+    </select>
 
-    <div class="form-group">
-      <label for="relationType">Type de relation:</label>
-      <select th:field="*{typeRelation}" id="relationType">
-        <option th:each="type : ${relationTypes}" th:value="${type}" th:text="${type}"></option>
-      </select>
-    </div>
+    <label for="relationType">Type de Relation:</label>
+    <select id="relationType" th:field="*{typeRelation}" required>
+      <option th:each="type : ${relationTypes}" th:value="${type}" th:text="${type}">
+        Type de Relation
+      </option>
+    </select>
 
-    <button type="submit">Enregistrer</button>
+    <button type="submit">Créer la Relation</button>
   </form>
 </div>
 

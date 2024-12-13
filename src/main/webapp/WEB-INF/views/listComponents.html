@@ -1,10 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Liste des Relations</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #3a506b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #5fa1d7;
+            padding: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 1rem;
+        }
+
+        .navbar a:hover {
+            color: #d1e9ff;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        /* Content Container Styling */
+        .table-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 800px;
+            margin-top: 5rem; /* Offset for fixed navbar */
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #5fa1d7;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #5fa1d7;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fbfc;
+        }
+
+        tr:hover {
+            background-color: #eef5fb;
+        }
+    </style>
 </head>
+
 <body>
-$END$
+
+<!-- Navbar Section -->
+<header>
+    <nav class="navbar">
+        <div class="navbar-brand">Social Network</div>
+        <div class="nav-links">
+            <a th:href="@{/persons}">Liste des Personnes</a>
+            <a th:href="@{/relationship/create}">Créer une Relation</a>
+            <a th:href="@{/relationship/list}">Liste des Relations</a>
+        </div>
+    </nav>
+</header>
+
+<!-- Table Container Section -->
+<div th:each="component : ${components}">
+    <h3>Groupe Connexe</h3>
+    <ul>
+        <li th:each="person : ${component}" th:text="${person.nom + ' ' + person.prenom}"></li>
+    </ul>
+</div>
+
 </body>
 </html>

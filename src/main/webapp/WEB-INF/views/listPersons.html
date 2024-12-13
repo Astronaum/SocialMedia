@@ -116,6 +116,14 @@
         .button:hover {
             background-color: #4a8ab4;
         }
+
+        .button-danger {
+            background-color: #d9534f;
+        }
+
+        .button-danger:hover {
+            background-color: #c9302c;
+        }
     </style>
 </head>
 
@@ -135,7 +143,28 @@
 
 <!-- Table Container Section -->
 <div class="table-container">
+    <h2 th:if="${personSearched != null}" th:text="'Personne recherchée: ' + ${personSearched.nom} + ' ' + ${personSearched.prenom}"></h2>
+    <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
     <h2>Liste des Personnes</h2>
+
+    <!-- Search Bar -->
+    <form th:action="@{/persons/search}" method="get" style="margin-bottom: 20px;">
+        <input type="text" name="keyword" placeholder="Rechercher..." style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+        <button type="submit" class="button">Rechercher</button>
+    </form>
+
+    <form th:action="@{/persons/sort}" method="get" style="margin-bottom: 20px;">
+        <input type="text" name="keyword" placeholder="Rechercher..." style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 5px;">
+        <select name="relationType" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <option value="">Tous les types</option>
+            <option value="AMI">Ami</option>
+            <option value="COLLEGUE">Collègue</option>
+            <option value="FAMILLE">Famille</option>
+        </select>
+        <button type="submit" class="button">Filtrer</button>
+    </form>
+
     <table>
         <thead>
         <tr>
@@ -143,6 +172,7 @@
             <th>Prénom</th>
             <th>Date de Naissance</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -150,7 +180,11 @@
             <td th:text="${person.nom}">Nom</td>
             <td th:text="${person.prenom}">Prénom</td>
             <td th:text="${person.dateNaissance}">Date de Naissance</td>
-            <td th:text="${person.description}">Date de Naissance</td>
+            <td th:text="${person.description}">Description</td>
+            <td>
+                <a th:href="@{/persons/edit/{id}(id=${person.id})}" class="button">Modifier</a>
+                <a th:href="@{/persons/delete/{id}(id=${person.id})}" class="button button-danger">Supprimer</a>
+            </td>
         </tr>
         </tbody>
     </table>

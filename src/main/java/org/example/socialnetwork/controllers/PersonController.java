@@ -6,9 +6,10 @@ import org.example.socialnetwork.services.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/persons")
@@ -39,4 +40,52 @@ public class PersonController {
         facade.createPerson(person); // Save the person
         return "redirect:/persons"; // Redirects to list of persons after saving
     }
+    @GetMapping("/related")
+    public String getRelatedPersons(@RequestParam Long personId, Model model) {
+        model.addAttribute("persons", facade.getPersonsRelatedTo(personId));
+        return "listPersons";
+    }
+
+    @GetMapping("/search")
+    public String searchPersons(@RequestParam("keyword") String keyword, Model model) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            model.addAttribute("persons", new ArrayList<>()); // Return empty list if no keyword provided
+        } else {
+            model.addAttribute("persons", facade.searchPersonsByKeywords(keyword));
+        }
+        return "listPersons";
+    }
+    @GetMapping("/persons")
+    @ResponseBody
+    public List<Person> getAllPersonsForDropdown() {
+        return facade.getAllPersons(); // Méthode existante dans le service
+    }
+    @GetMapping("/relationship/persons/search")
+    @ResponseBody
+    public List<Person> searchPersonsForDropdown(@RequestParam("keyword") String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        return facade.searchPersonsByKeywords(keyword);
+    }
+
+    @GetMapping("/without-relations")
+    public String getPersonsWithoutRelations(Model model) {
+        model.addAttribute("persons", facade.getPersonsWithoutRelations());
+        return "listPersons";
+    }
+
+    @GetMapping("/more-than-n-relations")
+    public String getPersonsWithMoreThanNRelations(@RequestParam int n, Model model) {
+        model.addAttribute("persons", facade.getPersonsWithMoreThanNRelations(n));
+        return "listPersons";
+    }
+
+    @GetMapping("/multiple-relation-types")
+    public String getPersonsWithMultipleRelationTypes(Model model) {
+        model.addAttribute("persons", facade.getPersonsWithMultipleRelationTypes());
+        return "listPersons";
+    }
+
+
 }

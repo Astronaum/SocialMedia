@@ -118,6 +118,24 @@
 <!-- Table Container Section -->
 <div class="table-container">
     <h2>Liste des Relations</h2>
+
+    <!-- Search Form -->
+    <form th:action="@{/relationship/search}" method="get" style="margin-bottom: 20px;">
+        <!-- Dropdown de sélection des personnes -->
+        <select id="personDropdown" name="personId" style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+            <option value="">-- Sélectionnez une personne --</option>
+            <!-- Les options seront injectées ici via JavaScript -->
+        </select>
+
+        <button type="submit" class="button">Rechercher</button>
+    </form>
+
+
+    <!-- Searched Person -->
+    <h3 th:if="${personSearched != null}" th:text="'Résultats pour : ' + ${personSearched.nom} + ' ' + ${personSearched.prenom}"></h3>
+    <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
+    <!-- Relationships Table -->
     <table>
         <thead>
         <tr>
@@ -137,4 +155,7 @@
 </div>
 
 </body>
+
+
 </html>
+
