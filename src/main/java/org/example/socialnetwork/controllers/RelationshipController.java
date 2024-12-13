@@ -35,22 +35,27 @@ public class RelationshipController {
             // Retrieve and set the actual Person entities based on their IDs
             Person personA = facade.getPerson(relationship.getPersonA().getId());
             Person personB = facade.getPerson(relationship.getPersonB().getId());
+
             if (personA == null || personB == null) {
                 throw new IllegalArgumentException("Les personnes sélectionnées n'existent pas.");
             }
             relationship.setPersonA(personA);
             relationship.setPersonB(personB);
+
             // Validation: Check if PersonA and PersonB are the same
             if (personA.getId().equals(personB.getId())) {
                 model.addAttribute("errorMessage", "Une personne ne peut pas avoir une relation avec elle-même.");
                 throw new IllegalArgumentException("Une personne ne peut pas avoir une relation avec elle-même.");
             }
-            // Check if the relationship already exists
-            if (facade.relationshipExists(personA, personB)) {
-                model.addAttribute("errorMessage", "La relation existe déjà entre " + personA.getNom() + " et " + personB.getNom() + ".");
-                throw new IllegalArgumentException("La relation existe déjà.");
+
+            // Check if a relationship of the same type already exists
+            if (facade.relationshipWithTypeExists(personA, personB, relationship.getTypeRelation())) {
+                model.addAttribute("errorMessage", "La relation de type " + relationship.getTypeRelation() +
+                        " existe déjà entre " + personA.getNom() + " et " + personB.getNom() + ".");
+                throw new IllegalArgumentException("La relation de ce type existe déjà.");
             }
-            // Save the relationship
+
+            // Save the bidirectional relationship
             facade.createBidirectionalRelationship(relationship);
             return "redirect:/relationship/list"; // Redirect to the relationship list on success
         } catch (IllegalArgumentException e) {
@@ -64,7 +69,7 @@ public class RelationshipController {
         model.addAttribute("persons", facade.getAllPersons());
         model.addAttribute("relationTypes", RelationType.values());
         return "createRelationship";
-}
+    }
 
 
 @GetMapping("/list")
