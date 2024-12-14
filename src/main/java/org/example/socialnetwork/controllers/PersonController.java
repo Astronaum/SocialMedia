@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/persons")
@@ -49,25 +51,36 @@ public class PersonController {
     @GetMapping("/search")
     public String searchPersons(@RequestParam("keyword") String keyword, Model model) {
         if (keyword == null || keyword.trim().isEmpty()) {
-            model.addAttribute("persons", new ArrayList<>()); // Return empty list if no keyword provided
+            model.addAttribute("persons", new ArrayList<>()); // Return an empty list if no keyword is provided
         } else {
-            model.addAttribute("persons", facade.searchPersonsByKeywords(keyword));
+            String searchInput = keyword.trim().toLowerCase();
+
+            List<Person> results = new ArrayList<>();
+
+            if (searchInput.contains(" ")) {
+                // Treat it as a full name
+                results.addAll(facade.searchPersonsByFullName(searchInput));
+            } else {
+                // Treat it as a partial match (search in both name and description)
+                String[] keywords = searchInput.split("\\s+");
+
+                List<Person> personsByName = facade.searchPersonsByNameKeywords(keywords);
+                List<Person> personsByDescription = facade.searchPersonsByDescriptionKeywords(keywords);
+
+                // Combine results while avoiding duplicates
+                Set<Person> combinedResults = new HashSet<>(personsByName);
+                combinedResults.addAll(personsByDescription);
+
+                results = new ArrayList<>(combinedResults);
+            }
+
+            model.addAttribute("persons", results);
         }
         return "listPersons";
     }
-    @GetMapping("/persons")
-    @ResponseBody
-    public List<Person> getAllPersonsForDropdown() {
-        return facade.getAllPersons(); // Méthode existante dans le service
-    }
-    @GetMapping("/relationship/persons/search")
-    @ResponseBody
-    public List<Person> searchPersonsForDropdown(@RequestParam("keyword") String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return new ArrayList<>();
-        }
-        return facade.searchPersonsByKeywords(keyword);
-    }
+
+
+
 
     @GetMapping("/without-relations")
     public String getPersonsWithoutRelations(Model model) {

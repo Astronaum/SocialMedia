@@ -93,14 +93,17 @@ public class Facade {
     }
 
     public List<Person> searchPersonsByNameKeywords(String[] keywords) {
+        if (keywords == null || keywords.length == 0) {
+            return new ArrayList<>();
+        }
+
         StringBuilder queryBuilder = new StringBuilder("SELECT DISTINCT p FROM Person p WHERE ");
         for (int i = 0; i < keywords.length; i++) {
-            queryBuilder.append("LOWER(p.nom) LIKE LOWER(:keyword").append(i).append(") OR LOWER(p.prenom) LIKE LOWER(:keyword").append(i).append(")");
+            queryBuilder.append("(LOWER(p.nom) LIKE LOWER(:keyword").append(i).append(") OR LOWER(p.prenom) LIKE LOWER(:keyword").append(i).append("))");
             if (i < keywords.length - 1) {
                 queryBuilder.append(" OR ");
             }
         }
-
 
         Query query = entityManager.createQuery(queryBuilder.toString(), Person.class);
         for (int i = 0; i < keywords.length; i++) {
@@ -109,12 +112,14 @@ public class Facade {
 
         return query.getResultList();
     }
+
     public List<Person> searchPersonsByFullName(String fullName) {
         return entityManager.createQuery(
-                        "SELECT p FROM Person p WHERE LOWER(CONCAT(p.nom, ' ', p.prenom)) = LOWER(:fullName)", Person.class)
+                        "SELECT p FROM Person p WHERE LOWER(CONCAT(p.nom, ' ', p.prenom)) = :fullName", Person.class)
                 .setParameter("fullName", fullName)
                 .getResultList();
     }
+
 
     public List<Person> searchPersonsByDescriptionKeywords(String[] keywords) {
         StringBuilder queryBuilder = new StringBuilder("SELECT DISTINCT p FROM Person p WHERE ");
