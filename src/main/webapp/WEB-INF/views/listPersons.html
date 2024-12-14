@@ -140,7 +140,7 @@
             <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
         </div>
         <div class="nav-links">
-            <a th:href="@{/persons}">Liste des Personnes</a>
+            <a th:href="@{/persons}">Les personnes</a>
             <a th:href="@{/relationship/create}">Créer une Relation</a>
             <a th:href="@{/relationship/list}">Les relations</a>
         </div>
@@ -156,7 +156,7 @@
 
     <!-- Search Bar -->
     <form th:action="@{/persons/search}" method="get" style="margin-bottom: 20px;">
-        <input type="text" name="keyword" placeholder="Rechercher..." style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+        <input type="text" name="keyword" placeholder="Rechercher par nom, prénom ou mot clé..." style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
         <button type="submit" class="button">Rechercher</button>
     </form>
 

@@ -135,10 +135,5 @@ public class RelationshipController {
         model.addAttribute("personSearched", personQuery);
         return "listRelationships";
     }
-    @GetMapping("/persons")
-    @ResponseBody
-    public List<Person> getAllPersonsForDropdown() {
-        return facade.getAllPersons();
-    }
 }
 
