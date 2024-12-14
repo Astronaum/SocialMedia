@@ -1,25 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit Person</title>
+    <title>Modifier une Personne</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #3a506b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #5fa1d7;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button {
+            background-color: #5fa1d7;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #4a8ab4;
+        }
+    </style>
 </head>
 <body>
-<h1>Edit Person</h1>
-<form th:action="@{/persons/update}" th:object="${person}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <label for="nom">Nom:</label>
-    <input type="text" id="nom" th:field="*{nom}" />
-    <br />
-    <label for="prenom">Prénom:</label>
-    <input type="text" id="prenom" th:field="*{prenom}" />
-    <br />
-    <label for="dateNaissance">Date de Naissance:</label>
-    <input type="date" id="dateNaissance" th:field="*{dateNaissance}" />
-    <br />
-    <label for="description">Description:</label>
-    <textarea id="description" th:field="*{description}"></textarea>
-    <br />
-    <button type="submit">Update</button>
-</form>
+<div class="form-container">
+    <h2>Modifier une Personne</h2>
+    <form th:action="@{/persons/update}" th:object="${person}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" th:field="*{nom}" required />
+
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" th:field="*{prenom}" required />
+
+        <label for="dateNaissance">Date de Naissance:</label>
+        <input type="date" id="dateNaissance" th:field="*{dateNaissance}" required />
+
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}" rows="4"></textarea>
+
+        <button type="submit" class="button">Mettre à jour</button>
+    </form>
+</div>
 </body>
 </html>
