@@ -27,6 +27,18 @@ public class Facade {
         entityManager.persist(person);
         return person;
     }
+    @Transactional
+    public void updatePerson(Person person) {
+        Person existingPerson = entityManager.find(Person.class, person.getId());
+        if (existingPerson == null) {
+            throw new IllegalArgumentException("Person not found.");
+        }
+        existingPerson.setNom(person.getNom());
+        existingPerson.setPrenom(person.getPrenom());
+        existingPerson.setDateNaissance(person.getDateNaissance());
+        existingPerson.setDescription(person.getDescription());
+        entityManager.merge(existingPerson);
+    }
 
     public List<Person> getAllPersons() {
         return entityManager.createQuery("SELECT p FROM Person p", Person.class).getResultList();
@@ -235,12 +247,24 @@ public class Facade {
 
     public List<Person> getPersonsWithMultipleRelationTypes() {
         return entityManager.createQuery(
-                        "SELECT DISTINCT r.personA FROM Relationship r " +
-                                "WHERE (SELECT COUNT(DISTINCT r2.typeRelation) " +
+                        "SELECT DISTINCT p " +
+                                "FROM Person p " +
+                                "WHERE EXISTS ( " +
+                                "   SELECT r " +
+                                "   FROM Relationship r " +
+                                "   WHERE (r.personA = p OR r.personB = p) " +
+                                "   AND ( " +
+                                "       SELECT COUNT(DISTINCT r2.typeRelation) " +
                                 "       FROM Relationship r2 " +
-                                "       WHERE r2.personA = r.personA) > 1", Person.class)
+                                "       WHERE r2.personA = r.personA AND r2.personB = r.personB " +
+                                "   ) > 1 " +
+                                ")", Person.class)
                 .getResultList();
     }
+
+
+
+
 
 
 

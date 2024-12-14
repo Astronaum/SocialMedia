@@ -136,25 +136,20 @@
         <div class="nav-links">
             <a th:href="@{/persons}">Liste des Personnes</a>
             <a th:href="@{/relationship/create}">Créer une Relation</a>
-            <a th:href="@{/relationship/list}">Les relations</a>
+            <a th:href="@{/relationship/list}">Les Relations</a>
         </div>
     </nav>
 </header>
 
 <!-- Table Container Section -->
 <div class="table-container">
-    <h2 th:if="${personSearched != null}" th:text="'Personne recherchée: ' + ${personSearched.nom} + ' ' + ${personSearched.prenom}"></h2>
-    <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+    <h2 th:if="${personSearched != null}" th:text="'Résultats pour: ' + ${personSearched.nom} + ' ' + ${personSearched.prenom}"></h2>
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
 
     <h2>Liste des Personnes</h2>
 
-    <!-- Search Bar -->
+    <!-- Combined Search and Filter Form -->
     <form th:action="@{/persons/search}" method="get" style="margin-bottom: 20px;">
-        <input type="text" name="keyword" placeholder="Rechercher..." style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
-        <button type="submit" class="button">Rechercher</button>
-    </form>
-
-    <form th:action="@{/persons/sort}" method="get" style="margin-bottom: 20px;">
         <input type="text" name="keyword" placeholder="Rechercher..." style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 5px;">
         <select name="relationType" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
             <option value="">Tous les types</option>
@@ -162,7 +157,7 @@
             <option value="COLLEGUE">Collègue</option>
             <option value="FAMILLE">Famille</option>
         </select>
-        <button type="submit" class="button">Filtrer</button>
+        <button type="submit" class="button">Rechercher / Filtrer</button>
     </form>
 
     <table>
