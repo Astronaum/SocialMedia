@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Personnes</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #3a506b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #5fa1d7;
+            padding: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 1rem;
+        }
+
+        .navbar a:hover {
+            color: #d1e9ff;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .navbar-brand img {
+            height: 40px; /* Adjust the height as necessary */
+        }
+
+        /* Content Container Styling */
+        .table-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 800px;
+            margin-top: 5rem; /* Offset for fixed navbar */
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #5fa1d7;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #5fa1d7;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fbfc;
+        }
+
+        tr:hover {
+            background-color: #eef5fb;
+        }
+
+        /* Button Styling */
+        .button {
+            display: inline-block;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #5fa1d7;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #4a8ab4;
+        }
+
+        .button-danger {
+            background-color: #d9534f;
+        }
+
+        .button-danger:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar Section -->
+<header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/persons}">Les personnes</a>
+            <a th:href="@{/relationship/create}">Créer une Relation</a>
+            <a th:href="@{/relationship/list}">Les relations</a>
+            <a th:href="@{/relationship/connected-components}">Composantes Connexes</a> <!-- New Button -->
+        </div>
+    </nav>
+</header>
+
+<!-- Table Container Section -->
+<div class="table-container">
+    <h2 th:if="${personSearched != null}" th:text="'Résultats pour: ' + ${personSearched.nom} + ' ' + ${personSearched.prenom}"></h2>
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+
+    <h2>Liste des Personnes</h2>
+
+    <!-- Combined Search and Filter Form -->
+    <form th:action="@{/persons/search}" method="get" style="margin-bottom: 20px;">
+        <input type="text" name="keyword" placeholder="Rechercher par nom, prénom ou mot clé..." style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+        <button type="submit" class="button">Rechercher</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de Naissance</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${persons}">
+            <td th:text="${person.nom}">Nom</td>
+            <td th:text="${person.prenom}">Prénom</td>
+            <td th:text="${person.dateNaissance}">Date de Naissance</td>
+            <td th:text="${person.description}">Description</td>
+            <td>
+                <a th:href="@{/persons/edit/{id}(id=${person.id})}" class="button">Modifier</a>
+                <a th:href="@{/persons/delete/{id}(id=${person.id})}" class="button button-danger">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/persons/new}" class="button">Ajouter une nouvelle personne</a>
+</div>
+
+</body>
+</html>

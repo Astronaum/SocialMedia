@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome to Social Media</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #3a506b;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #5fa1d7;
+            padding: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 1rem;
+        }
+
+        .navbar a:hover {
+            color: #d1e9ff;
+        }
+
+        .navbar-brand img {
+            height: 40px; /* Adjust the height as necessary */
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        /* Welcome Section Styling */
+        h1 {
+            color: #5fa1d7;
+            font-size: 2.5rem;
+            margin-top: 5rem; /* Spacing below navbar */
+            font-weight: bold;
+        }
+
+        p {
+            color: #627d98;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Button Styling */
+        .button-container {
+            margin-top: 1.5rem;
+        }
+
+        .button-container a {
+            text-decoration: none;
+            color: white;
+            background-color: #5fa1d7;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container a:hover {
+            background-color: #4a8ab4;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar Section -->
+<header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/persons}">Les personnes</a>
+            <a th:href="@{/relationship/create}">Créer une Relation</a>
+            <a th:href="@{/relationship/list}">Les relations</a>
+            <a th:href="@{/relationship/connected-components}">Composantes Connexes</a> <!-- New Button -->
+        </div>
+    </nav>
+</header>
+
+<main>
+    <h1>Bienvenue sur notre Réseau Social</h1>
+    <p>Rejoignez-nous pour tisser des liens, partager des moments uniques, et découvrir un monde connecté.</p>
+    <div class="fun-section">
+        <p>Amusez-vous à découvrir des personnes partageant vos passions et créez des souvenirs mémorables !</p>
+        <p>Connectez, partagez, éclatez-vous !</p>
+    </div>
+    <div class="button-container">
+        <a th:href="@{/persons}">Voir toutes les personnes</a>
+    </div>
+</main>
+
+
+</body>
+</html>
