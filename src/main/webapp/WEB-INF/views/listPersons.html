@@ -160,16 +160,7 @@
         <button type="submit" class="button">Rechercher</button>
     </form>
 
-    <form th:action="@{/persons/sort}" method="get" style="margin-bottom: 20px;">
-        <input type="text" name="keyword" placeholder="Rechercher..." style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 5px;">
-        <select name="relationType" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-            <option value="">Tous les types</option>
-            <option value="AMI">Ami</option>
-            <option value="COLLEGUE">Collègue</option>
-            <option value="FAMILLE">Famille</option>
-        </select>
-        <button type="submit" class="button">Filtrer</button>
-    </form>
+
 
     <table>
         <thead>

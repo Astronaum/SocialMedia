@@ -140,13 +140,5 @@ public class RelationshipController {
     public List<Person> getAllPersonsForDropdown() {
         return facade.getAllPersons();
     }
-    @GetMapping("/persons/search")
-    @ResponseBody
-    public List<Person> searchPersonsForDropdown(@RequestParam("keyword") String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return new ArrayList<>();
-        }
-        return facade.searchPersonsByKeywords(keyword);
-    }
 }
 
