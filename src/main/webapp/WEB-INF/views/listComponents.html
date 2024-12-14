@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Liste des Relations</title>
+    <title>Composantes Connexes</title>
     <style>
         /* General Page Styling */
         body {
@@ -10,14 +10,10 @@
             color: #3a506b;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
+            box-sizing: border-box;
         }
 
-        /* Navbar Styling */
+        /* Navbar Styling (Reuse from Home Page) */
         .navbar {
             background-color: #5fa1d7;
             padding: 1rem;
@@ -40,11 +36,6 @@
             margin: 0 1rem;
         }
 
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
         .navbar a:hover {
             color: #d1e9ff;
         }
@@ -53,63 +44,75 @@
             height: 40px; /* Adjust the height as necessary */
         }
 
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
         .nav-links {
             display: flex;
         }
 
-        /* Content Container Styling */
-        .table-container {
-            background-color: #ffffff;
+        /* Page Content Styling */
+        main {
+            margin-top: 6rem; /* Spacing below navbar */
             padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 800px;
-            margin-top: 5rem; /* Offset for fixed navbar */
-            margin-bottom: 30px;
+            text-align: center;
         }
 
-        h2 {
+        h1 {
             color: #5fa1d7;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
         }
 
-        /* Table Styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            padding: 12px;
+        .component {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 1rem auto;
+            padding: 1rem;
+            border-radius: 5px;
+            max-width: 600px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
 
-        th {
-            background-color: #5fa1d7;
+        .component h2 {
+            font-size: 1.25rem;
+            color: #5fa1d7;
+            margin-bottom: 0.5rem;
+        }
+
+        .component ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .component ul li {
+            padding: 0.5rem 0;
+            color: #627d98;
+            border-bottom: 1px solid #f0f4f8;
+        }
+
+        .component ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* Button Back to Home */
+        .button-container {
+            margin-top: 2rem;
+        }
+
+        .button-container a {
+            text-decoration: none;
             color: white;
+            background-color: #5fa1d7;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
             font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9fbfc;
-        }
-
-        tr:hover {
-            background-color: #eef5fb;
+        .button-container a:hover {
+            background-color: #4a8ab4;
         }
     </style>
 </head>
-
 <body>
 
 <!-- Navbar Section -->
@@ -122,17 +125,36 @@
             <a th:href="@{/persons}">Les personnes</a>
             <a th:href="@{/relationship/create}">Créer une Relation</a>
             <a th:href="@{/relationship/list}">Les relations</a>
+            <a th:href="@{/relationship/connected-components}">Composantes Connexes</a>
         </div>
     </nav>
 </header>
 
-<!-- Table Container Section -->
-<div th:each="component : ${components}">
-    <h3>Groupe Connexe</h3>
-    <ul>
-        <li th:each="person : ${component}" th:text="${person.nom + ' ' + person.prenom}"></li>
-    </ul>
-</div>
+<!-- Main Content -->
+<main>
+    <h1>Composantes Connexes</h1>
+
+    <div th:if="${components.size() == 0}">
+        <p>Aucune composante connexe trouvée.</p>
+    </div>
+
+    <div th:if="${components.size() > 0}">
+        <p>Total des composantes: <span th:text="${components.size()}"></span></p>
+
+        <div th:each="component : ${components}" class="component">
+            <h2>Composante #<span th:text="${component.id}"></span> (Taille: <span th:text="${component.size}"></span>)</h2>
+            <ul>
+                <li th:each="person : ${component.persons}">
+                    <span th:text="${person.prenom} + ' ' + ${person.nom}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a th:href="@{/}">Retour à l'accueil</a>
+    </div>
+</main>
 
 </body>
 </html>

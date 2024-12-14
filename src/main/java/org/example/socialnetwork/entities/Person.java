@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "person")
 @Entity
+@Table(name = "person")
 public class Person {
 
     @Id
@@ -16,13 +16,14 @@ public class Person {
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
-    @Column(length = 500) // Limite la taille du texte si nécessaire
+
+    @Column(length = 500) // Limit description size
     private String description;
 
-    @OneToMany(mappedBy = "personA", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "personA", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Relationship> relationsAsPersonA = new HashSet<>();
 
-    @OneToMany(mappedBy = "personB", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "personB", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Relationship> relationsAsPersonB = new HashSet<>();
 
     public Person() {}
@@ -34,7 +35,7 @@ public class Person {
         this.description = description;
     }
 
-    // Getters and setters
+    // Getters, Setters, and helper methods for relationships
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -55,4 +56,28 @@ public class Person {
 
     public Set<Relationship> getRelationsAsPersonB() { return relationsAsPersonB; }
     public void setRelationsAsPersonB(Set<Relationship> relationsAsPersonB) { this.relationsAsPersonB = relationsAsPersonB; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id != null && id.equals(person.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

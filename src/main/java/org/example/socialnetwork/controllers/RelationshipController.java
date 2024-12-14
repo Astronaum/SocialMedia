@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/relationship")
@@ -110,11 +111,7 @@ public class RelationshipController {
         return "listRelationTypes";
     }
 
-    @GetMapping("/connected-components")
-    public String getConnectedComponents(Model model) {
-        model.addAttribute("components", facade.findConnectedComponents());
-        return "listComponents";
-    }
+
 
     @GetMapping("/search")
     public String searchRelationshipsByFullName(@RequestParam("personQuery") String personQuery, Model model) {
@@ -139,5 +136,46 @@ public class RelationshipController {
         model.addAttribute("personSearched", personQuery);
         return "listRelationships";
     }
+    @GetMapping("/connected-components")
+    public String getConnectedComponents(Model model) {
+        List<Set<Person>> components = facade.findConnectedComponents();
+
+        // Prepare a list of components with sizes
+        List<ComponentInfo> componentInfos = new ArrayList<>();
+        int index = 1;
+        for (Set<Person> component : components) {
+            componentInfos.add(new ComponentInfo(index++, component.size(), component));
+        }
+
+        model.addAttribute("components", componentInfos);
+        return "listComponents";
+    }
+
+    // Helper class to represent connected component info
+    public static class ComponentInfo {
+        private final int id;
+        private final int size;
+        private final Set<Person> persons;
+
+        public ComponentInfo(int id, int size, Set<Person> persons) {
+            this.id = id;
+            this.size = size;
+            this.persons = persons;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public Set<Person> getPersons() {
+            return persons;
+        }
+    }
+
+
 }
 
