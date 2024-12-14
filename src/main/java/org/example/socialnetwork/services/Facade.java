@@ -125,10 +125,12 @@ public class Facade {
 
     public List<Person> searchPersonsByFullName(String fullName) {
         return entityManager.createQuery(
-                        "SELECT p FROM Person p WHERE LOWER(CONCAT(p.nom, ' ', p.prenom)) = :fullName", Person.class)
-                .setParameter("fullName", fullName)
+                        "SELECT p FROM Person p WHERE " +
+                                "LOWER(TRIM(CONCAT(p.nom, ' ', p.prenom))) = LOWER(TRIM(:fullName))", Person.class)
+                .setParameter("fullName", fullName.trim())
                 .getResultList();
     }
+
 
 
     public List<Person> searchPersonsByDescriptionKeywords(String[] keywords) {
