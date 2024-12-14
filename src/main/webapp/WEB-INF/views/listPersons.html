@@ -53,6 +53,10 @@
             display: flex;
         }
 
+        .navbar-brand img {
+            height: 40px; /* Adjust the height as necessary */
+        }
+
         /* Content Container Styling */
         .table-container {
             background-color: #ffffff;
@@ -132,9 +136,11 @@
 <!-- Navbar Section -->
 <header>
     <nav class="navbar">
-        <div class="navbar-brand">Social Network</div>
+        <div class="navbar-brand">
+            <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
+        </div>
         <div class="nav-links">
-            <a th:href="@{/persons}">Liste des Personnes</a>
+            <a th:href="@{/persons}">Les personnes</a>
             <a th:href="@{/relationship/create}">Créer une Relation</a>
             <a th:href="@{/relationship/list}">Les Relations</a>
         </div>
@@ -150,14 +156,8 @@
 
     <!-- Combined Search and Filter Form -->
     <form th:action="@{/persons/search}" method="get" style="margin-bottom: 20px;">
-        <input type="text" name="keyword" placeholder="Rechercher..." style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 5px;">
-        <select name="relationType" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-            <option value="">Tous les types</option>
-            <option value="AMI">Ami</option>
-            <option value="COLLEGUE">Collègue</option>
-            <option value="FAMILLE">Famille</option>
-        </select>
-        <button type="submit" class="button">Rechercher / Filtrer</button>
+        <input type="text" name="keyword" placeholder="Rechercher par nom, prénom ou mot clé..." style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+        <button type="submit" class="button">Rechercher</button>
     </form>
 
     <table>
