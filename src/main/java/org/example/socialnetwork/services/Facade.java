@@ -1,5 +1,4 @@
 package org.example.socialnetwork.services;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -8,7 +7,6 @@ import org.example.socialnetwork.entities.Person;
 import org.example.socialnetwork.entities.RelationType;
 import org.example.socialnetwork.entities.Relationship;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -181,16 +179,12 @@ public class Facade {
 
     public List<Person> getPersonsWithMoreThanNRelations(int n) {
         return entityManager.createQuery(
-                        "SELECT p FROM Person p WHERE SIZE(p.relationsAsPersonA) + SIZE(p.relationsAsPersonB) > :n", Person.class)
+                        "SELECT p FROM Person p WHERE SIZE(p.relationsAsPersonA) + SIZE(p.relationsAsPersonB) >= :n", Person.class)
                 .setParameter("n", n)
                 .getResultList();
     }
 
-    public List<Person> getPersonsWithMultipleRelationTypes() {
-        return entityManager.createQuery(
-                "SELECT DISTINCT r.personA FROM Relationship r GROUP BY r.personA, r.personB HAVING COUNT(DISTINCT r.typeRelation) > 1",
-                Person.class).getResultList();
-    }
+
 
     public List<Object[]> getRelationTypesSortedByOccurrences() {
         return entityManager.createQuery(
@@ -224,7 +218,6 @@ public class Facade {
             }
         }
     }
-
     private List<Person> getNeighbors(Person person) {
         return entityManager.createQuery(
                         "SELECT DISTINCT r.personB FROM Relationship r WHERE r.personA = :person UNION " +
@@ -232,4 +225,29 @@ public class Facade {
                 .setParameter("person", person)
                 .getResultList();
     }
+    public List<Person> getPersonsWithoutRelationships() {
+        return entityManager.createQuery(
+                        "SELECT p FROM Person p WHERE p.relationsAsPersonA IS EMPTY AND p.relationsAsPersonB IS EMPTY", Person.class)
+                .getResultList();
+    }
+    public List<Person> getPersonsWithMoreThanNRelationships(int n) {
+        return entityManager.createQuery(
+                        "SELECT DISTINCT p FROM Person p " +
+                                "WHERE (SELECT COUNT(r) FROM Relationship r WHERE r.personA = p OR r.personB = p) >= :n", Person.class)
+                .setParameter("n", n)
+                .getResultList();
+    }
+
+    public List<Person> getPersonsWithMultipleRelationTypes() {
+        return entityManager.createQuery(
+                        "SELECT DISTINCT r.personA FROM Relationship r " +
+                                "WHERE (SELECT COUNT(DISTINCT r2.typeRelation) " +
+                                "       FROM Relationship r2 " +
+                                "       WHERE r2.personA = r.personA) > 1", Person.class)
+                .getResultList();
+    }
+
+
+
+
 }

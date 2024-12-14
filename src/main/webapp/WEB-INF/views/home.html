@@ -44,9 +44,8 @@
             color: #d1e9ff;
         }
 
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .navbar-brand img {
+            height: 40px; /* Adjust the height as necessary */
         }
 
         .nav-links {
@@ -93,24 +92,29 @@
 <!-- Navbar Section -->
 <header>
     <nav class="navbar">
-        <div class="navbar-brand">Social Network</div>
+        <div class="navbar-brand">
+            <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
+        </div>
         <div class="nav-links">
             <a th:href="@{/persons}">Liste des Personnes</a>
             <a th:href="@{/relationship/create}">Créer une Relation</a>
-            <a th:href="@{/relationship/list}">Liste des Relations</a>
+            <a th:href="@{/relationship/list}">Les relations</a>
         </div>
     </nav>
 </header>
 
-<!-- Welcome Section -->
 <main>
-    <h1>Welcome to the Social Network</h1>
-    <p>Connect, share, and collaborate with others in a vibrant social space.</p>
-
+    <h1>Bienvenue sur notre Réseau Social</h1>
+    <p>Rejoignez-nous pour tisser des liens, partager des moments uniques, et découvrir un monde connecté.</p>
+    <div class="fun-section">
+        <p>Amusez-vous à découvrir des personnes partageant vos passions et créez des souvenirs mémorables !</p>
+        <p>Connectez, partagez, éclatez-vous !</p>
+    </div>
     <div class="button-container">
-        <a th:href="@{/persons}">View All Persons</a>
+        <a th:href="@{/persons}">Voir toutes les personnes</a>
     </div>
 </main>
+
 
 </body>
 </html>

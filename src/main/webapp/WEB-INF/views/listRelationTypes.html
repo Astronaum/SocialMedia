@@ -49,6 +49,10 @@
       font-weight: bold;
     }
 
+    .navbar-brand img {
+      height: 40px; /* Adjust the height as necessary */
+    }
+
     .nav-links {
       display: flex;
     }
@@ -106,11 +110,13 @@
 <!-- Navbar Section -->
 <header>
   <nav class="navbar">
-    <div class="navbar-brand">Social Network</div>
+    <div class="navbar-brand">
+      <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
+    </div>
     <div class="nav-links">
       <a th:href="@{/persons}">Liste des Personnes</a>
       <a th:href="@{/relationship/create}">Créer une Relation</a>
-      <a th:href="@{/relationship/list}">Liste des Relations</a>
+      <a th:href="@{/relationship/list}">Les relations</a>
     </div>
   </nav>
 </header>
