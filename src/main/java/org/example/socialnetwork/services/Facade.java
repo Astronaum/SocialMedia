@@ -217,9 +217,15 @@ public class Facade {
 
     public List<Object[]> getRelationTypesSortedByOccurrences() {
         return entityManager.createQuery(
-                        "SELECT r.typeRelation, COUNT(r) FROM Relationship r GROUP BY r.typeRelation ORDER BY COUNT(r) DESC", Object[].class)
+                        "SELECT r.typeRelation, COUNT(DISTINCT " +
+                                "CONCAT(LEAST(r.personA.id, r.personB.id), '-', GREATEST(r.personA.id, r.personB.id))) " +
+                                "FROM Relationship r " +
+                                "GROUP BY r.typeRelation " +
+                                "ORDER BY COUNT(DISTINCT CONCAT(LEAST(r.personA.id, r.personB.id), '-', GREATEST(r.personA.id, r.personB.id))) DESC",
+                        Object[].class)
                 .getResultList();
     }
+
 
     public List<Set<Person>> findConnectedComponents() {
         List<Person> allPersons = getAllPersons();

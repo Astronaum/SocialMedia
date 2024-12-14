@@ -5,15 +5,15 @@
     <style>
         /* General Page Styling */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            color: #3a506b;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Navbar Styling (Reuse from Home Page) */
+        /* Navbar Styling */
         .navbar {
             background-color: #5fa1d7;
             padding: 1rem;
@@ -40,6 +40,11 @@
             color: #d1e9ff;
         }
 
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
         .navbar-brand img {
             height: 40px; /* Adjust the height as necessary */
         }
@@ -48,68 +53,129 @@
             display: flex;
         }
 
-        /* Page Content Styling */
+        /* Main Content Styling */
         main {
             margin-top: 6rem; /* Spacing below navbar */
-            padding: 2rem;
+            padding: 3rem 1.5rem;
             text-align: center;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         h1 {
-            color: #5fa1d7;
-            font-size: 2rem;
+            color: #4C9ED9;
+            font-size: 2.6rem;
             margin-bottom: 1.5rem;
+            font-weight: 700;
         }
 
+        /* Component Card Styling */
         .component {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 1rem auto;
-            padding: 1rem;
-            border-radius: 5px;
-            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+            padding: 2rem;
+            border-radius: 10px;
             text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .component:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
         .component h2 {
-            font-size: 1.25rem;
-            color: #5fa1d7;
-            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            color: #4C9ED9;
+            margin-bottom: 0.75rem;
+        }
+
+        .component p {
+            font-size: 1.2rem;
+            color: #555;
         }
 
         .component ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
 
         .component ul li {
-            padding: 0.5rem 0;
-            color: #627d98;
-            border-bottom: 1px solid #f0f4f8;
+            padding: 0.8rem 0;
+            color: #666;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #f2f2f2;
+            transition: background-color 0.3s ease;
         }
 
         .component ul li:last-child {
             border-bottom: none;
         }
 
+        .component ul li:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Info Number Card Container */
+        .info-number-card-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        /* Info Number Card Styling */
+        .info-number-card {
+            background-color: #ffffff;
+            color: #4C9ED9;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-right: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-number-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .components-label {
+            font-weight: 600;
+            margin-left: 1rem;
+            color: #4C9ED9;
+            font-size: 2rem;
+        }
+
         /* Button Back to Home */
         .button-container {
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         .button-container a {
             text-decoration: none;
             color: white;
-            background-color: #5fa1d7;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            background-color: #4C9ED9;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .button-container a:hover {
-            background-color: #4a8ab4;
+            background-color: #357ab7;
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -123,7 +189,6 @@
         </div>
         <div class="nav-links">
             <a th:href="@{/persons}">Les personnes</a>
-            <a th:href="@{/relationship/create}">Créer une Relation</a>
             <a th:href="@{/relationship/list}">Les relations</a>
             <a th:href="@{/relationship/connected-components}">Composantes Connexes</a>
         </div>
@@ -132,17 +197,21 @@
 
 <!-- Main Content -->
 <main>
-    <h1>Composantes Connexes</h1>
-
     <div th:if="${components.size() == 0}">
         <p>Aucune composante connexe trouvée.</p>
     </div>
 
     <div th:if="${components.size() > 0}">
-        <p>Total des composantes: <span th:text="${components.size()}"></span></p>
-
+        <div class="total-components-card">
+            <div class="info-number-card-container">
+                <div class="info-number-card">
+                    <span th:text="${components.size()}"></span>
+                </div>
+                <span class="components-label">composantes</span>
+            </div>
+        </div>
         <div th:each="component : ${components}" class="component">
-            <h2>Composante #<span th:text="${component.id}"></span> (Taille: <span th:text="${component.size}"></span>)</h2>
+            <h2>Composante <span th:text="${component.id}"></span> (Taille <span th:text="${component.size}"></span>)</h2>
             <ul>
                 <li th:each="person : ${component.persons}">
                     <span th:text="${person.prenom} + ' ' + ${person.nom}"></span>

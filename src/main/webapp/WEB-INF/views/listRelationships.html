@@ -107,6 +107,24 @@
         tr:hover {
             background-color: #eef5fb;
         }
+        /* Button Styling */
+        .button {
+            display: inline-block;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            border: 1px solid #d1d9e6;
+            background-color: #5fa1d7;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #4a8ab4;
+        }
     </style>
 </head>
 
@@ -120,9 +138,8 @@
         </div>
         <div class="nav-links">
             <a th:href="@{/persons}">Les personnes</a>
-            <a th:href="@{/relationship/create}">Créer une Relation</a>
             <a th:href="@{/relationship/list}">Les relations</a>
-            <a th:href="@{/relationship/connected-components}">Composantes Connexes</a> <!-- New Button -->
+            <a th:href="@{/relationship/connected-components}">Composantes Connexes</a>
         </div>
     </nav>
 </header>
@@ -137,7 +154,7 @@
             <option value="without-relations">Sans relations</option>
             <option value="multiple-types">Multiples types de relations</option>
         </select>
-        <input type="number" name="n" min="0" placeholder="2" id="filterValue"
+        <input type="number" name="n" min="0" placeholder="N" id="filterValue"
                style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; color: #3a506b; width: 60px; text-align: center;" />
         <button type="submit"
                 style="background-color: #5fa1d7; color: white; border: none; border-radius: 5px; padding: 10px 15px; font-size: 14px; cursor: pointer; transition: background-color 0.3s ease;">
@@ -181,6 +198,7 @@
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/relationship/create}" class="button">Ajouter une nouvelle relation</a>
 
 </div>
 
