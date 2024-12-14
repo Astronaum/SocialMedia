@@ -39,6 +39,15 @@
             margin: 0 1rem;
         }
 
+        .navbar-brand img {
+            height: 40px; /* Adjust the height as necessary */
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
         .navbar a:hover {
             color: #d1e9ff;
         }
@@ -112,9 +121,11 @@
 <!-- Navbar Section -->
 <header>
     <nav class="navbar">
-        <div class="navbar-brand">Social Network</div>
+        <div class="navbar-brand">
+            <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
+        </div>
         <div class="nav-links">
-            <a th:href="@{/persons}">Liste des Personnes</a>
+            <a th:href="@{/persons}">Les personnes</a>
             <a th:href="@{/relationship/create}">Créer une Relation</a>
             <a th:href="@{/relationship/list}">Les relations</a>
         </div>

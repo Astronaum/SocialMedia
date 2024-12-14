@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/relationship")
@@ -114,4 +115,29 @@ public class RelationshipController {
         model.addAttribute("components", facade.findConnectedComponents());
         return "listComponents";
     }
+
+    @GetMapping("/search")
+    public String searchRelationshipsByFullName(@RequestParam("personQuery") String personQuery, Model model) {
+        if (personQuery == null || personQuery.trim().isEmpty()) {
+            model.addAttribute("errorMessage", "Veuillez entrer le nom complet pour effectuer une recherche.");
+            model.addAttribute("relationships", new ArrayList<>());
+            return "listRelationships";
+        }
+        // Search for persons matching the full name
+        List<Person> matchingPersons = facade.searchPersonsByFullName(personQuery.trim());
+        if (matchingPersons.isEmpty()) {
+            model.addAttribute("errorMessage", "Aucune personne trouvée correspondant à votre recherche.");
+            model.addAttribute("relationships", new ArrayList<>());
+        } else {
+            // Get relationships for the matching persons
+            List<Relationship> relationships = new ArrayList<>();
+            for (Person person : matchingPersons) {
+                relationships.addAll(facade.getRelationshipsForPerson(person.getId()));
+            }
+            model.addAttribute("relationships", relationships);
+        }
+        model.addAttribute("personSearched", personQuery);
+        return "listRelationships";
+    }
 }
+
