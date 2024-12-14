@@ -275,7 +275,9 @@ public class Facade {
     public List<Person> getPersonsWithMoreThanNRelationships(int n) {
         return entityManager.createQuery(
                         "SELECT DISTINCT p FROM Person p " +
-                                "WHERE (SELECT COUNT(r) FROM Relationship r WHERE r.personA = p OR r.personB = p) >= :n", Person.class)
+                                "WHERE (SELECT COUNT(r) FROM Relationship r " +
+                                "WHERE (r.personA = p OR r.personB = p) " +
+                                "AND r.personA.id < r.personB.id) >= :n", Person.class)
                 .setParameter("n", n)
                 .getResultList();
     }
