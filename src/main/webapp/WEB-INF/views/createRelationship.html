@@ -100,7 +100,17 @@
       font-weight: bold;
     }
 
-    select, button {
+    select {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 4px;
+      border: 1px solid #d1d9e6;
+      font-size: 1rem;
+      color: #3a506b;
+      box-sizing: border-box; /* S'assure que le padding ne dépasse pas */
+    }
+
+    button {
       width: 100%;
       padding: 0.8rem;
       border-radius: 4px;
@@ -152,30 +162,35 @@
     <p th:text="${errorMessage}"></p>
   </div>
   <form th:action="@{/relationship/save}" th:object="${relationship}" method="post">
-    <label for="personA">Personne A:</label>
-    <select id="personA" th:field="*{personA.id}" required>
-      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom + ' ' + person.prenom}">
-        Personne A
-      </option>
-    </select>
+    <div class="form-group">
+      <label for="personA">Personne A:</label>
+      <select id="personA" th:field="*{personA.id}" required>
+        <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom + ' ' + person.prenom}">
+          Personne A
+        </option>
+      </select>
+    </div>
 
-    <label for="personB">Personne B:</label>
-    <select id="personB" th:field="*{personB.id}" required>
-      <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom + ' ' + person.prenom}">
-        Personne B
-      </option>
-    </select>
+    <div class="form-group">
+      <label for="personB">Personne B:</label>
+      <select id="personB" th:field="*{personB.id}" required>
+        <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.nom + ' ' + person.prenom}">
+          Personne B
+        </option>
+      </select>
+    </div>
 
-    <label for="relationType">Type de Relation:</label>
-    <select id="relationType" th:field="*{typeRelation}" required>
-      <option th:each="type : ${relationTypes}" th:value="${type}" th:text="${type}">
-        Type de Relation
-      </option>
-    </select>
+    <div class="form-group">
+      <label for="relationType">Type de Relation:</label>
+      <select id="relationType" th:field="*{typeRelation}" required>
+        <option th:each="type : ${relationTypes}" th:value="${type}" th:text="${type}">
+          Type de Relation
+        </option>
+      </select>
+    </div>
 
     <button type="submit">Créer la Relation</button>
   </form>
 </div>
-
 </body>
 </html>

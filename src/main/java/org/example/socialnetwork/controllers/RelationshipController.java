@@ -49,7 +49,7 @@ public class RelationshipController {
 
             if (facade.relationshipWithTypeExists(personA, personB, relationship.getTypeRelation())) {
                 model.addAttribute("errorMessage", "La relation de type " + relationship.getTypeRelation() + " existe déjà entre " + personA.getNom() + " et " + personB.getNom() + ".");
-                return "createRelationship";
+                throw new IllegalArgumentException("La relation de ce type existe déjà entre ces deux personnes.");
             }
 
             facade.createBidirectionalRelationship(relationship);
