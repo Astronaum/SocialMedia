@@ -39,6 +39,21 @@ public class Facade {
         existingPerson.setDescription(person.getDescription());
         entityManager.merge(existingPerson);
     }
+    @Transactional
+    public void deletePerson(Long id) {
+        Person person = entityManager.find(Person.class, id);
+        if (person == null) {
+            throw new IllegalArgumentException("Person not found.");
+        }
+
+        // Ensure relationships are removed before deleting the person
+        entityManager.createQuery("DELETE FROM Relationship r WHERE r.personA.id = :personId OR r.personB.id = :personId")
+                .setParameter("personId", id)
+                .executeUpdate();
+
+        entityManager.remove(person);
+    }
+
 
     public List<Person> getAllPersons() {
         return entityManager.createQuery("SELECT p FROM Person p", Person.class).getResultList();

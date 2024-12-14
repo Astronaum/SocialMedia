@@ -79,6 +79,32 @@ public class PersonController {
         return "listPersons";
     }
 
+    @GetMapping("/edit/{id}")
+    public String showEditPersonForm(@PathVariable("id") Long id, Model model) {
+        Person person = facade.getPerson(id);
+        if (person == null) {
+            throw new IllegalArgumentException("Person not found.");
+        }
+        model.addAttribute("person", person);
+        return "editPerson"; // Edit form template
+    }
+
+
+    @PostMapping("/update")
+    @Transactional
+    public String updatePerson(@ModelAttribute Person person) {
+        facade.updatePerson(person);
+        return "redirect:/persons"; // Redirect to the list of persons
+    }
+
+    @GetMapping("/delete/{id}")
+    @Transactional
+    public String deletePerson(@PathVariable("id") Long id) {
+        facade.deletePerson(id);
+        return "redirect:/persons";
+    }
+
+
 
 
 
