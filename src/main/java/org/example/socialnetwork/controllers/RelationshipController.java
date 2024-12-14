@@ -77,25 +77,29 @@ public class RelationshipController {
                                       @RequestParam(name = "keyword", required = false) String keyword,
                                       @RequestParam(name = "n", required = false) Integer n,
                                       Model model) {
-        switch (filter) {
-            case "related-to":
-                model.addAttribute("persons", facade.getPersonsRelatedTo(Long.parseLong(keyword)));
-                break;
-
-            case "without-relations":
-                model.addAttribute("persons", facade.getPersonsWithoutRelationships());
-                break;
-
-            case "more-than-n":
-                model.addAttribute("persons", facade.getPersonsWithMoreThanNRelationships(n));
-                break;
-
-            case "multiple-types":
-                model.addAttribute("persons", facade.getPersonsWithMultipleRelationTypes());
-                break;
-
-            default:
-                model.addAttribute("persons", new ArrayList<>());
+        try {
+            switch (filter) {
+                case "related-to":
+                    if (keyword == null) throw new IllegalArgumentException("Keyword is required for 'related-to' filter.");
+                    model.addAttribute("persons", facade.getPersonsRelatedTo(Long.parseLong(keyword)));
+                    break;
+                case "without-relations":
+                    model.addAttribute("persons", facade.getPersonsWithoutRelationships());
+                    break;
+                case "more-than-n":
+                    if (n == null) throw new IllegalArgumentException("Parameter 'n' is required for 'more-than-n' filter.");
+                    model.addAttribute("persons", facade.getPersonsWithMoreThanNRelationships(n));
+                    break;
+                case "multiple-types":
+                    model.addAttribute("persons", facade.getPersonsWithMultipleRelationTypes());
+                    break;
+                default:
+                    model.addAttribute("persons", new ArrayList<>());
+            }
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "An unexpected error occurred: " + e.getMessage());
         }
         return "listPersons";
     }
