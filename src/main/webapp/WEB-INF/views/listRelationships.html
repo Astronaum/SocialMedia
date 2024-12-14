@@ -128,7 +128,7 @@
 
 <!-- Table Container Section -->
 <div class="table-container">
-    <h2>Liste des Relations</h2>
+    <h2>Liste des relations</h2>
     <form th:action="@{/relationship/filter}" method="get" style="margin-bottom: 20px;">
         <label for="filterBy">Filtrer par :</label>
         <select name="filter" id="filterBy">
@@ -143,10 +143,10 @@
 
 
     <form th:action="@{/relationship/search}" method="get" style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-        <input type="text" id="personSearch" name="personQuery" placeholder="Search for a person..."
+        <input type="text" id="personSearch" name="personQuery" placeholder="Recherche les personnes en relation avec ?"
                style="padding: 10px; flex-grow: 1; border: 1px solid #ccc; border-radius: 5px;">
         <button type="submit" style="padding: 10px 15px; border: none; border-radius: 5px; background-color: #007BFF; color: white; cursor: pointer;">
-            Search
+            Rechercher
         </button>
         <!-- Nouveau bouton "Voir Types de Relations" -->
         <a th:href="@{/relationship/relation-types}"
