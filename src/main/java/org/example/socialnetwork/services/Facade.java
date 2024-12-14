@@ -222,23 +222,36 @@ public class Facade {
     }
 
     private void exploreComponent(Person person, Set<Person> component, Set<Person> visited) {
+        if (visited.contains(person)) return;
+
         visited.add(person);
         component.add(person);
 
         List<Person> neighbors = getNeighbors(person);
         for (Person neighbor : neighbors) {
-            if (!visited.contains(neighbor)) {
-                exploreComponent(neighbor, component, visited);
-            }
+            exploreComponent(neighbor, component, visited);
         }
     }
+
     private List<Person> getNeighbors(Person person) {
-        return entityManager.createQuery(
-                        "SELECT DISTINCT r.personB FROM Relationship r WHERE r.personA = :person UNION " +
-                                "SELECT DISTINCT r.personA FROM Relationship r WHERE r.personB = :person", Person.class)
+        List<Person> neighborsFromA = entityManager.createQuery(
+                        "SELECT r.personB FROM Relationship r WHERE r.personA = :person", Person.class)
                 .setParameter("person", person)
                 .getResultList();
+
+        List<Person> neighborsFromB = entityManager.createQuery(
+                        "SELECT r.personA FROM Relationship r WHERE r.personB = :person", Person.class)
+                .setParameter("person", person)
+                .getResultList();
+
+        Set<Person> uniqueNeighbors = new HashSet<>();
+        uniqueNeighbors.addAll(neighborsFromA);
+        uniqueNeighbors.addAll(neighborsFromB);
+
+        return new ArrayList<>(uniqueNeighbors);
     }
+
+
     public List<Person> getPersonsWithoutRelationships() {
         return entityManager.createQuery(
                         "SELECT p FROM Person p WHERE p.relationsAsPersonA IS EMPTY AND p.relationsAsPersonB IS EMPTY", Person.class)
