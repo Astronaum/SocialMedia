@@ -69,23 +69,6 @@ public class PersonController {
         return facade.searchPersonsByKeywords(keyword);
     }
 
-    @GetMapping("/without-relations")
-    public String getPersonsWithoutRelations(Model model) {
-        model.addAttribute("persons", facade.getPersonsWithoutRelations());
-        return "listPersons";
-    }
-
-    @GetMapping("/more-than-n-relations")
-    public String getPersonsWithMoreThanNRelations(@RequestParam int n, Model model) {
-        model.addAttribute("persons", facade.getPersonsWithMoreThanNRelations(n));
-        return "listPersons";
-    }
-
-    @GetMapping("/multiple-relation-types")
-    public String getPersonsWithMultipleRelationTypes(Model model) {
-        model.addAttribute("persons", facade.getPersonsWithMultipleRelationTypes());
-        return "listPersons";
-    }
 
 
 }

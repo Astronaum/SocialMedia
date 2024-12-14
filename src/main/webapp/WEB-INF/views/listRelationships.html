@@ -118,6 +118,18 @@
 <!-- Table Container Section -->
 <div class="table-container">
     <h2>Liste des Relations</h2>
+    <form th:action="@{/relationship/filter}" method="get" style="margin-bottom: 20px;">
+        <label for="filterBy">Filtrer par :</label>
+        <select name="filter" id="filterBy">
+            <option value="more-than-n">Plus de N relations</option>
+
+            <option value="without-relations">Sans relations</option>
+            <option value="multiple-types">Multiples types de relations</option>
+        </select>
+        <input type="number" name="n" min="0" placeholder="2" id="filterValue" style="margin-left: 10px;" />
+        <button type="submit">Filtrer</button>
+    </form>
+
 
     <form th:action="@{/relationship/search}" method="get" style="margin-bottom: 20px;">
         <input type="text" id="personSearch" name="personQuery" placeholder="Search for a person..."
