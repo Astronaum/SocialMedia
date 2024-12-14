@@ -84,18 +84,20 @@ public class RelationshipController {
             case "without-relations":
                 model.addAttribute("persons", facade.getPersonsWithoutRelationships());
                 break;
+
             case "more-than-n":
                 model.addAttribute("persons", facade.getPersonsWithMoreThanNRelationships(n));
                 break;
+
             case "multiple-types":
                 model.addAttribute("persons", facade.getPersonsWithMultipleRelationTypes());
                 break;
+
             default:
                 model.addAttribute("persons", new ArrayList<>());
         }
         return "listPersons";
     }
-
 
     @GetMapping("/relation-types")
     public String getRelationTypesSorted(Model model) {
