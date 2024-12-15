@@ -20,7 +20,7 @@
         /* Navbar Styling */
         .navbar {
             background-color: #5fa1d7;
-            padding: 1rem;
+            padding: 0.8rem 1.5rem;
             width: 100%;
             box-sizing: border-box;
             display: flex;
@@ -30,31 +30,42 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
         }
 
         .navbar a {
             color: white;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             margin: 0 1rem;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
         .navbar a:hover {
             color: #d1e9ff;
+            transform: scale(1.1);
         }
 
         .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1.5rem;
             font-weight: bold;
         }
 
-        .nav-links {
-            display: flex;
+        .navbar-brand img {
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .navbar-brand img {
-            height: 40px; /* Adjust the height as necessary */
+        /* Navbar links for desktop */
+        .nav-links {
+            display: flex;
+            gap: 1rem;
         }
 
         /* Content Container Styling */
@@ -65,7 +76,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             width: 100%;
             max-width: 800px;
-            margin-top: 5rem; /* Offset for fixed navbar */
+            margin-top: 7rem; /* Offset for fixed navbar */
             margin-bottom: 30px;
         }
 
@@ -148,14 +159,12 @@
     </nav>
 </header>
 
-<!-- Table Container Section -->
 <div class="table-container">
     <h2 th:if="${personSearched != null}" th:text="'Résultats pour: ' + ${personSearched.nom} + ' ' + ${personSearched.prenom}"></h2>
     <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
 
     <h2>Liste des Personnes</h2>
 
-    <!-- Combined Search and Filter Form -->
     <form th:action="@{/persons/search}" method="get" style="margin-bottom: 20px;">
         <input type="text" name="keyword" placeholder="Rechercher par nom, prénom ou mot clé..." style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
         <button type="submit" class="button">Rechercher</button>

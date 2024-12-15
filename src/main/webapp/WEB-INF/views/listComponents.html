@@ -3,7 +3,6 @@
 <head>
     <title>Composantes Connexes</title>
     <style>
-        /* General Page Styling */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f6f9;
@@ -13,10 +12,9 @@
             box-sizing: border-box;
         }
 
-        /* Navbar Styling */
         .navbar {
             background-color: #5fa1d7;
-            padding: 1rem;
+            padding: 0.8rem 1.5rem;
             width: 100%;
             box-sizing: border-box;
             display: flex;
@@ -26,34 +24,43 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
         }
 
         .navbar a {
             color: white;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             margin: 0 1rem;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
         .navbar a:hover {
             color: #d1e9ff;
+            transform: scale(1.1);
         }
 
         .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1.5rem;
             font-weight: bold;
         }
 
         .navbar-brand img {
-            height: 40px; /* Adjust the height as necessary */
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .nav-links {
             display: flex;
+            gap: 1rem;
         }
 
-        /* Main Content Styling */
         main {
             margin-top: 6rem; /* Spacing below navbar */
             padding: 3rem 1.5rem;
@@ -134,7 +141,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             padding: 1.5rem 2rem;
-            border-radius: 8px;
+            border-radius: 360px;
             border: 1px solid #e0e0e0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-right: 1.5rem;

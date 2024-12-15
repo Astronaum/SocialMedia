@@ -20,7 +20,7 @@
     /* Navbar Styling */
     .navbar {
       background-color: #5fa1d7;
-      padding: 1rem;
+      padding: 0.8rem 1.5rem;
       width: 100%;
       box-sizing: border-box;
       display: flex;
@@ -30,31 +30,63 @@
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 1;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 0 0 8px 8px;
     }
 
     .navbar a {
       color: white;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
       margin: 0 1rem;
+      transition: color 0.3s ease, transform 0.2s ease;
     }
 
     .navbar a:hover {
       color: #d1e9ff;
+      transform: scale(1.1);
     }
 
     .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       font-size: 1.5rem;
       font-weight: bold;
     }
 
     .navbar-brand img {
-      height: 40px; /* Adjust the height as necessary */
+      height: 40px;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
+    /* Navbar links for desktop */
     .nav-links {
       display: flex;
+      gap: 1rem;
+    }
+
+    /* Responsive Navbar */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: #5fa1d7;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 1rem 0;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
     }
 
     /* Content Container Styling */
@@ -65,7 +97,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       width: 100%;
       max-width: 800px;
-      margin-top: 5rem; /* Offset for fixed navbar */
+      margin-top: 7rem; /* Offset for fixed navbar */
       margin-bottom: 30px;
     }
 
@@ -102,6 +134,15 @@
     tr:hover {
       background-color: #eef5fb;
     }
+
+    /* CSS for handling the hamburger menu using CSS only */
+    #menu-toggle {
+      display: none;
+    }
+
+    #menu-toggle:checked + .nav-links {
+      display: flex;
+    }
   </style>
 </head>
 
@@ -113,6 +154,9 @@
     <div class="navbar-brand">
       <img src="/SocialMedia_war/resources/logo.png" alt="Social Network Logo">
     </div>
+
+
+    <!-- Navigation Links -->
     <div class="nav-links">
       <a th:href="@{/persons}">Les personnes</a>
       <a th:href="@{/relationship/list}">Les relations</a>
@@ -138,7 +182,6 @@
     </tr>
     </tbody>
   </table>
-
 </div>
 
 </body>
