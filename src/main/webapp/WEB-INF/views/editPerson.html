@@ -23,7 +23,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             max-width: 500px;
             width: 100%;
-            margin-top: 50px;
+            margin-top: 100px;
         }
 
         h2 {
@@ -112,6 +112,27 @@
         .button:hover {
             background-color: #4a8ab4;
         }
+        /* Button Back to Home */
+        .button-container {
+            margin-top: 3rem;
+        }
+
+        .button-container a {
+            text-decoration: none;
+            color: white;
+            background-color: #4C9ED9;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container a:hover {
+            background-color: #357ab7;
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 <header>
@@ -145,6 +166,9 @@
 
         <button type="submit" class="button">Mettre à jour</button>
     </form>
+</div>
+<div class="button-container">
+    <a th:href="@{/}">Retour à l'accueil</a>
 </div>
 </body>
 </html>

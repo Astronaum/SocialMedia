@@ -4,6 +4,7 @@ INSERT INTO person (nom, prenom, datenaissance, description) VALUES ('Jane', 'Do
 INSERT INTO person (nom, prenom, datenaissance, description) VALUES ('Alice', 'Smith', '1992-03-10', 'Teacher');
 INSERT INTO person (nom, prenom, datenaissance, description) VALUES ('Bob', 'Johnson', '1988-11-30', 'Data Analyst');
 INSERT INTO person (nom, prenom, datenaissance, description) VALUES ('Charlie', 'Brown', '1995-08-25', 'Entrepreneur');
+INSERT INTO person (nom, prenom, datenaissance, description) VALUES ('Barry', 'Alan', '1970-01-25', 'Super Hero');
 
 -- Insert initial data into Relationship
 INSERT INTO relationship (persona_id, personb_id, typerelation) VALUES (1, 2, 'AMI');

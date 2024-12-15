@@ -1,0 +1,51 @@
+[33maf242bc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m feat: Navbar styling
+[33m040e758[m feat: Graphical improvement
+[33m27b932d[m Merge pull request #10 from Astronaum/temp
+[33mf8e67bc[m Merge pull request #9 from Astronaum/tmpo
+[33m0f8f142[m NNNN
+[33m9176940[m[33m ([m[1;31morigin/main[m[33m)[m Merge pull request #8 from Astronaum/dev
+[33m12aede4[m[33m ([m[1;31morigin/tmpo[m[33m)[m feat: added update and delete person features
+[33mc58fb2e[m Merge pull request #7 from Astronaum/temp
+[33m5814689[m Merge branch 'dev' into temp
+[33maa85b1c[m css
+[33mcd9eb3f[m Merge pull request #6 from Astronaum/tempo
+[33ma3f603c[m Merge pull request #5 from Astronaum/tmp
+[33m056e9cc[m feat: added connected components features
+[33m7876e91[m bug: list relationship
+[33m7b823eb[m bug: Create relationship bug fix
+[33mc08aed2[m Sauvegarde des modifications locales avant le checkout
+[33m7714d67[m Merge pull request #4 from Astronaum/temp
+[33m4b8b690[m bug: fixed relationship names search
+[33mc93e6e9[m Merge pull request #3 from Astronaum/tmp
+[33m3de81b7[m Merge branch 'dev' into tmp
+[33m1046a4d[m bug: Navbar fix
+[33m67a007e[m mmm
+[33m16fe539[m Merge pull request #2 from Astronaum/tmp
+[33mdb13fec[m Merge branch 'dev' into tmp
+[33m7f91262[m bug: search relations
+[33m89aa0af[m bug: fixed search in persons page
+[33m86b2707[m Merge pull request #1 from Astronaum/tmp
+[33m575fd1a[m[33m ([m[1;31morigin/tmp[m[33m, [m[1;32mtmp[m[33m)[m Graphical upgrade
+[33md196fe4[m Resolved merge conflict in RelationshipController.java
+[33mae8138a[m N relations
+[33m9714bfd[m feat: Occurences et types de relations
+[33mf38e668[m bug:fixed relationship add error
+[33mecf82e8[m bug
+[33m4ad3dad[m feat-Bug: fixed relationship search
+[33m0087509[m feat: added some listing capabilities
+[33m5ff0a48[m added listing capabilities
+[33m6fcc991[m bug:Fixing duplicate relationship
+[33mfdf6d26[m feat: Description for each person + Bidirectional relation + Can't create a relation with itself
+[33m4cf5127[m navbar
+[33m6ba77db[m listrelationships
+[33mcc8b717[m Feat: Adding a relashionship is working
+[33m45b590d[m Feat: Creating a person and listing persons is working
+[33m70d03b6[m bug: fix
+[33m80b0ea5[m feat: Config Package : Servlet
+[33m42c44b4[m feat: added all classes and thymeleaf htmls
+[33m6c8fb01[m feat: added person /relationship and relationship classes
+[33mde8a49c[m del: dleted useless person class
+[33me80f9dd[m squelette
+[33mff2b542[m feat: added Person class
+[33m9b2a716[m fix: Modifying pom.xml, adding dependencies
+[33m4de54c0[m[33m ([m[1;32mmain[m[33m)[m first commit
